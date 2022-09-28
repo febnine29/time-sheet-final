@@ -154,6 +154,7 @@ export default function SingleProject({
         </AccordionPanel>
       </AccordionItem>
       <AlertDialog
+          motionPreset='slideInBottom'
           isOpen={isOpenDel}
           leastDestructiveRef={cancelRef}
           onClose={onCloseDel}

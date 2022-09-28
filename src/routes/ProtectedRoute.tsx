@@ -13,6 +13,6 @@ export default function ProtectedRoute({ children }: any) {
   return isAuthenticate ? (
     children
   ) : (
-    <Navigate to="/account" state={location.pathname} />
+    <Navigate to="/login" state={location.pathname} />
   );
 }

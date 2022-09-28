@@ -8,7 +8,7 @@ export default function Home(props: HomeProps) {
   return (
     <Flex width="100%" maxW="1200px" m="0 auto" justifyContent="center">
       <Heading fontSize="50px" mt={5}>
-        Welcome Timesheet
+        Welcome to Timesheet
       </Heading>
     </Flex>
   );

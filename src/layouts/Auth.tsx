@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Box, Spinner } from "@chakra-ui/react";
 import Login from "../components/Auth/Login";
-import Register from "../components/Auth/Register";
 import { useAppSelector } from "../app/hooks";
 import { authSelector } from "../features/AuthSlice";
 import { useNavigate, useLocation } from "react-router";
@@ -14,8 +13,8 @@ export default function Auth(props: AuthProps) {
 
   const { isAuthenticate, authLoading } = useAppSelector(authSelector);
 
-  let locationPath = location.state || "/";
-  if (authLoading) return <Spinner />;
+  let locationPath = location.state || "/home";
+  // if (authLoading) return <Spinner />;
   if (isAuthenticate) {
     navigate(locationPath);
   }
@@ -23,7 +22,6 @@ export default function Auth(props: AuthProps) {
     <>
       <Box maxW="500px" m="0 auto">
         {typeAuth === "LOGIN" && <Login setTypeAuth={setTypeAuth} />}
-        {typeAuth === "REGISTER" && <Register setTypeAuth={setTypeAuth} />}
       </Box>
     </>
   );

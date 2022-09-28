@@ -82,16 +82,12 @@ export default function Login({ setTypeAuth }: LoginProps) {
             isChecked={dataLogin.rememberClient}
             onChange={handleFormLoginCheckbox}
           >
-            Remember
+            Remember Me
           </Checkbox>
         </Box>
         <VStack>
           <Button colorScheme="blue" type="submit" isLoading={authLoading}>
             Login
-          </Button>
-          <Text color="gray.500">Do not have an account ?</Text>
-          <Button variant="link" onClick={() => setTypeAuth("REGISTER")}>
-            Register
           </Button>
         </VStack>
       </form>

@@ -35,8 +35,9 @@ export default function Navbar(props: NavbarProps) {
       <Box pt={10} >
         <Flex justifyContent="start" alignItems='center'>
           <Avatar src={nccLogo} mr={5} bg='white' borderRadius='50%' boxShadow="-0px 0px 2px #b8b8b8, 0px 0px 0px 2px #ffffff, 5px 2px 8px #717171"/>
-          <Box>
-            <Text color="gray.600" >{userInfo?.userName}</Text>
+          <Box mb={3} pt={2}>
+            <Text color="gray.600" fontWeight='bold'>{userInfo?.userName}</Text>
+            <Text color="gray.600" fontStyle='italic'>{userInfo?.emailAddress}</Text>
           </Box>
         </Flex>
         <Flex justifyContent="center" mt='auto' bg='none'>
@@ -44,7 +45,6 @@ export default function Navbar(props: NavbarProps) {
             size="sm"
             colorScheme="red"
             ml='auto'
-
             onClick={handleLogout}
           >
             Logout

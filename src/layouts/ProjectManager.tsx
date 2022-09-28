@@ -132,12 +132,11 @@ export default function ProjectManager(props: ProjectManagerProps) {
         }
         title="Edit Project"
       />
-      <Box>
+      <Box mb={5} display='flex' justifyContent='center'>
         <Button
           leftIcon={<Plus />}
           colorScheme="green"
           onClick={onOpenNewProject}
-          mr={2}
         >
           Create New Project
         </Button>

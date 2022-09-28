@@ -97,7 +97,7 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
           <Flex mt={2} justify="space-between" key={index}>
             <Flex
               boxSize="30px"
-              bgColor="red.400"
+              bgColor="transparent"
               borderRadius="50%"
               align="center"
               justify="center"
@@ -105,11 +105,11 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
               cursor="pointer"
               onClick={() => handleClickRemoveTask(task)}
             >
-              <Icon w={5} h={5} color="white"
+              <Icon w={6} h={6} color="red"
                 as={X}
               />
             </Flex>
-            <Text mt={2}>{task.name}</Text>
+            <Text mt={1} mr='auto'>{task.name}</Text>
 
             <Checkbox
               defaultChecked={true}
@@ -125,7 +125,7 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
           <Flex mt={2} justify="space-between">
             <Flex
               boxSize="30px"
-              bgColor="blue.400"
+              bgColor="transparent"
               borderRadius="50%"
               align="center"
               justify="center"
@@ -133,13 +133,12 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
               cursor="pointer"
               onClick={() => handleClickAddTask(task)}
             >
-              <Icon w={5} h={5} color="white"
+              <Icon w={6} h={6} color="blue.500"
                 as={Plus}
               />
             </Flex>
-            <Text mt={2}>{task.name}</Text>
-
-            <Text mt={2}>{task.type === 0 ? "Common Task" : "Other Task"}</Text>
+            <Text mt={1} mr='auto'>{task.name}</Text>
+            <Text mt={1}>{task.type === 0 ? "Common Task" : "Other Task"}</Text>
           </Flex>
         ))}
       </Box>

@@ -71,7 +71,7 @@ export const archiveTask = createAsyncThunk(
         dispatch(
           setMess({
             type: "success",
-            mess: "ArchiveTask Success",
+            mess: "Archive Task Success",
           })
         );
       }
@@ -79,7 +79,7 @@ export const archiveTask = createAsyncThunk(
       dispatch(
         setMess({
           type: "error",
-          mess: "This task is in a project ,You can't delete task",
+          mess: "This task is in a project, you can't delete task",
         })
       );
     }
@@ -95,7 +95,7 @@ export const deArchiveTask = createAsyncThunk(
         dispatch(
           setMess({
             type: "success",
-            mess: "Unarchive Success",
+            mess: "UnArchive Task Success",
           })
         );
       }
@@ -104,7 +104,7 @@ export const deArchiveTask = createAsyncThunk(
       dispatch(
         setMess({
           type: "error",
-          mess: "Unarchive Fail",
+          mess: "UnArchive Task Fail",
         })
       );
     }

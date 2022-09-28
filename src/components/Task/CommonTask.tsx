@@ -129,6 +129,7 @@ export default function CommonTask({tasks, handleClickEdit}: CommonTaskProps) {
         </Box>
         {/* --------------ALERT DIALOG---------------- */}
         <AlertDialog
+          motionPreset='slideInBottom'
           isOpen={isOpenDelete}
           leastDestructiveRef={cancelRef}
           onClose={onCloseDelete}
@@ -156,6 +157,7 @@ export default function CommonTask({tasks, handleClickEdit}: CommonTaskProps) {
         </AlertDialog>
         
         <AlertDialog
+          motionPreset='slideInBottom'
           isOpen={isOpenAr}
           leastDestructiveRef={cancelRef}
           onClose={onCloseAr}
@@ -183,6 +185,7 @@ export default function CommonTask({tasks, handleClickEdit}: CommonTaskProps) {
         </AlertDialog> 
 
         <AlertDialog
+          motionPreset='slideInBottom'
           isOpen={isOpenUn}
           leastDestructiveRef={cancelRef}
           onClose={onCloseUn}

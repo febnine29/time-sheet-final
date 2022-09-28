@@ -130,18 +130,17 @@ function Team({
           <Flex key={index} align="center" mb={2}>
             <Flex
               boxSize="30px"
-              bgColor="red.400"
+              bgColor="transparent"
               borderRadius="50%"
               align="center"
               justify="center"
-              mr={2}
+              // mr={2}
               cursor="pointer"
               onClick={() => handleClickRemove(item)}
             >
-              <Icon w={5} h={5} color="white"
+              <Icon w={6} h={6} color="red"
                 as={X}
               />
-              
             </Flex>
             <Box mx={2}>
               <Text mr={2}>{item.name}</Text>
@@ -263,7 +262,7 @@ function Team({
           <Flex key={index} align="center" mb={2}>
             <Flex
               boxSize="30px"
-              bgColor="blue.400"
+              bgColor="transparent"
               borderRadius="50%"
               align="center"
               justify="center"
@@ -271,7 +270,7 @@ function Team({
               cursor="pointer"
               onClick={() => handleClickAdd(item)}
             >
-              <Icon w={5} h={5} color="white"
+              <Icon w={6} h={6} color="blue.500"
                 as={Plus}
               />
             </Flex>

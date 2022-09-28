@@ -26,17 +26,21 @@ function App() {
   }, []);
 
   return (
-    <Box className="App" w="100%">
-      <Header />
-      <Box display="flex">
+    <Box className="App" w="100%" h="100vh">
+      <Box display="flex" w="100%" h="100vh">
         <Routes>
-          <Route path="/account" element={<Auth />} />
+          <Route path="/login" element={<Auth />} />
           <Route
             path="/"
             element={
               <ProtectedRoute>
-                <Navbar />
-                <Home />
+                <Box w="100vw">
+                  <Header />
+                  <Box display="flex">
+                    <Navbar />
+                    <Home />
+                  </Box>
+                </Box>
               </ProtectedRoute>
             }
           />
@@ -44,8 +48,13 @@ function App() {
             path="/tasks"
             element={
               <ProtectedRoute>
-                <Navbar />
-                <TaskManager/>
+                <Box w="100vw">
+                  <Header />
+                  <Box display="flex">
+                    <Navbar />
+                    <TaskManager/>
+                  </Box>
+                </Box>
               </ProtectedRoute>
             }
           />
@@ -53,8 +62,13 @@ function App() {
             path="/projects"
             element={
               <ProtectedRoute>
-                <Navbar />
-                <ProjectManager />
+                <Box w="100vw">
+                  <Header />
+                  <Box display="flex">
+                    <Navbar />
+                    <ProjectManager />
+                  </Box>
+                </Box>
               </ProtectedRoute>
             }
           />
