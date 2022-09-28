@@ -1,0 +1,25 @@
+POST  http://dev.timesheetapi.nccsoft.vn/api/services/app/Project/Save
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5kZXYiLCJBc3BOZXQuSWRlbnRpdHkuU2VjdXJpdHlTdGFtcCI6IjJSRFJWS1E1Nko0UFZST0xKUkRYUFhYTTRBWVRVMjVaIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIkFkbWluIiwiUHJvamVjdEFkbWluIiwiQmFzaWNVc2VyIiwiU3VwZXJ2aXNvciIsIkFkbWluRGV2Il0sInN1YiI6IjMiLCJqdGkiOiJjNWNjMjEzMC02OTBlLTRlNmMtOGFhOS1jYTQ4ODBmNzhlY2IiLCJpYXQiOjE2Mzc1ODg0MDcsIm5iZiI6MTYzNzU4ODQwNywiZXhwIjoxNjQ2MjI4NDA3LCJpc3MiOiJUaW1lc2hlZXQiLCJhdWQiOiJUaW1lc2hlZXQifQ.RnxOvqOrrXPif2KGKgjfjTl2DG5krT2OKiMTHFG39yI
+
+{
+  "name": "stringsadsdsa",
+  "code": "stringsads",
+  "timeStart": "2021-11-18T17:00:00.000Z",
+  "timeEnd": "2021-11-24T17:00:00.000Z",
+  "note": "stringas",
+  "projectType": 0,
+  "customerId": 0,
+  "tasks": [{"taskId": 2, "billable": true}, {"taskId": 3, "billable": true}, {"taskId": 44, "billable": true}],
+  "users": [
+    {"userId": 1, "type": 1}
+  ],
+  "projectTargetUsers": [
+  ],
+  "isAllUserBelongTo": true,
+
+}
+
+####
+GET http://dev.timesheetapi.nccsoft.vn/api/services/app/Project/getAll?status=&search=
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5kZXYiLCJBc3BOZXQuSWRlbnRpdHkuU2VjdXJpdHlTdGFtcCI6IjJSRFJWS1E1Nko0UFZST0xKUkRYUFhYTTRBWVRVMjVaIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIkFkbWluIiwiUHJvamVjdEFkbWluIiwiQmFzaWNVc2VyIiwiU3VwZXJ2aXNvciIsIkFkbWluRGV2Il0sInN1YiI6IjMiLCJqdGkiOiJjNWNjMjEzMC02OTBlLTRlNmMtOGFhOS1jYTQ4ODBmNzhlY2IiLCJpYXQiOjE2Mzc1ODg0MDcsIm5iZiI6MTYzNzU4ODQwNywiZXhwIjoxNjQ2MjI4NDA3LCJpc3MiOiJUaW1lc2hlZXQiLCJhdWQiOiJUaW1lc2hlZXQifQ.RnxOvqOrrXPif2KGKgjfjTl2DG5krT2OKiMTHFG39yI
