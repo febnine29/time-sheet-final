@@ -31,7 +31,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Auth />} />
           <Route
-            path="/"
+            path="/home"
             element={
               <ProtectedRoute>
                 <Box w="100vw">

@@ -1,7 +1,10 @@
-import { Box, Checkbox, Flex, Icon, Text } from "@chakra-ui/react";
+import { Box, Checkbox, Flex, Icon, Text, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import {useDispatch} from "react-redux";
+import { isRender } from "../../../features/ConfirmRender";
 import { Minus, Plus, X } from "react-feather";
 import { UseFormSetValue } from "react-hook-form";
+import { RepeatIcon } from "@chakra-ui/icons";
 import {
   deleteArrInArrById,
   deleteArrRemoveTaskForm,
@@ -84,6 +87,8 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
       setFlagTaskCheck({});
     }
   }, [taskDefaultValue]);
+  const dispatch = useDispatch()
+  const [renderTask, setRenderTask] = useState(false)
 
   return (
     <Box maxH="500px" overflowY="scroll">
@@ -121,7 +126,16 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
       </Box>
       <Box mt={2}>
         <Text fontWeight="bold">Select task</Text>
-        {tasksCpn?.map((task) => (
+        <Button 
+          my={2}
+          leftIcon={<RepeatIcon />} 
+          colorScheme='teal' 
+          variant='solid'
+          onClick={() => setRenderTask(true)}
+        >
+            Show Tasks
+        </Button>
+        {renderTask ? tasksCpn?.map((task) => (
           <Flex mt={2} justify="space-between">
             <Flex
               boxSize="30px"
@@ -140,7 +154,7 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
             <Text mt={1} mr='auto'>{task.name}</Text>
             <Text mt={1}>{task.type === 0 ? "Common Task" : "Other Task"}</Text>
           </Flex>
-        ))}
+        )) : ''}
       </Box>
     </Box>
   );

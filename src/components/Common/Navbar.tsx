@@ -54,7 +54,7 @@ export default function Navbar(props: NavbarProps) {
       </Box>
       {/* Route */}
       <Flex flexDirection="column" justifySelf="flex-start">
-        <Link to="/">
+        <Link to="/home">
           <Flex
             padding={3}
             alignItems="center"

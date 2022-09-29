@@ -1,8 +1,9 @@
 import { Avatar } from "@chakra-ui/avatar";
 import { Box, Divider } from "@chakra-ui/layout";
-import { Code, Flex, Icon, Input, Select, Text, IconButton } from "@chakra-ui/react";
+import { Code, Flex, Icon, Input, Select, Text, IconButton,Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Minus, Plus,X } from "react-feather";
+import { RepeatIcon } from "@chakra-ui/icons";
 
 import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import {
@@ -119,7 +120,10 @@ function Team({
     );
   };
 
-  
+  const [render, setRender] = useState(false)
+  const handleRenderMembers = () => {
+    setRender(true)
+  }
   return (
     <Box maxH="500px" overflowY="scroll">
       <Box mb={2} fontWeight="bold">
@@ -180,15 +184,17 @@ function Team({
         </Box>
         <Flex mb={2}>
           <Box mr={2}>
-            <Text fontWeight="bold" color="gray.400">
+            <Text fontWeight="bold">
               Branch
             </Text>
             <Select
+              variant='flushed'
               onChange={(e) => {
                 setDataFilter({
                   ...dataFilter,
                   branch: { index: +e.target.value },
                 });
+                setRender(true)
               }}
             >
               <option value={-1}>All</option>
@@ -201,15 +207,17 @@ function Team({
             </Select>
           </Box>
           <Box mr={2}>
-            <Text fontWeight="bold" color="gray.400">
+            <Text fontWeight="bold">
               Type
             </Text>
             <Select
+              variant='flushed'
               onChange={(e) => {
                 setDataFilter({
                   ...dataFilter,
                   type: { index: +e.target.value },
                 });
+                setRender(true)
               }}
             >
               <option value={-1}>All</option>
@@ -222,15 +230,17 @@ function Team({
             </Select>
           </Box>
           <Box mr={2}>
-            <Text fontWeight="bold" color="gray.400">
+            <Text fontWeight="bold">
               Level
             </Text>
             <Select
+              variant='flushed'
               onChange={(e) => {
                 setDataFilter({
                   ...dataFilter,
                   level: { index: +e.target.value },
                 });
+                setRender(true)
               }}
             >
               <option value={-1}>All</option>
@@ -243,20 +253,33 @@ function Team({
             </Select>
           </Box>
           <Box mr={2}>
-            <Text fontWeight="bold" color="gray.400">
+            <Text fontWeight="bold">
               Name
             </Text>
             <Input
+              variant='flushed'
               onChange={(e) => {
                 setDataFilter({
                   ...dataFilter,
                   name: { nameString: e.target.value },
                 });
+                setRender(true)
               }}
             ></Input>
           </Box>
         </Flex>
-        {filterUser(users)(dataFilter.branch.index)(dataFilter.type.index)(
+        <Box>
+          <Button 
+            mb={4}
+            leftIcon={<RepeatIcon />} 
+            colorScheme='teal' 
+            variant='solid'
+            onClick={() => setRender(true)}
+          >
+            Show Members
+          </Button>
+        </Box>
+        {render ? filterUser(users)(dataFilter.branch.index)(dataFilter.type.index)(
           dataFilter.level.index
         )(dataFilter.name.nameString)?.map((item, index) => (
           <Flex key={index} align="center" mb={2}>
@@ -285,7 +308,7 @@ function Team({
               {checkTypeUser(item.type)}
             </Text>
           </Flex>
-        ))}
+        )) : ''}
       </Box>
     </Box>
   );

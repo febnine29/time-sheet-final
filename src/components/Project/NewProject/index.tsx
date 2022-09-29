@@ -14,8 +14,9 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { url } from "../../../api/index";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useSelector } from "react-redux";
 import { projectSelector, saveProject } from "../../../features/ProjectSlice";
-
+import { renderSelector } from "../../../features/ConfirmRender";
 import { setMess, taskSelector, getAllTask } from "../../../features/TaskSlice";
 
 import type { Customer } from "../../../type/Customer";
@@ -126,7 +127,11 @@ function SaveProject({ TYPE_SAVE, onClose, defaultValues }: SaveProjectProps) {
     setCustomer(response.data.result);
   };
 
+  const renderState = useSelector(renderSelector)
   useEffect(() => {
+    if(renderState.render){
+      
+    } 
     getUser();
     getCustomer();
     dispatch(getAllTask());

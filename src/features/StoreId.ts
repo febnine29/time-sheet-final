@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { Action } from 'history';
 import { RootState } from "../app/store";
-import { storeId } from './AlertReducer';
 import {DataSingleProject} from "../type/Project"
 interface idState{
     pId: DataSingleProject
