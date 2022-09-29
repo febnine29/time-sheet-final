@@ -9,12 +9,9 @@ export interface ProtectedRouteProps {}
 export default function ProtectedRoute({ children }: any) {
   const { authLoading, isAuthenticate } = useAppSelector(authSelector);
   const location = useLocation();
-
+  
   return isAuthenticate ? (
           children) : (
-    // <Navigate to="/login" state={location.pathname} />
-    <div className="content" style={{width: '60vw', height: '20vh', margin: '30vh auto', fontSize: '30px', fontWeight: 'bold', textAlign: 'center'}}>
-        Checking Authentication...
-      </div>
+    <Navigate to="/" state={location.pathname} />
   );
 }

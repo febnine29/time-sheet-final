@@ -18,7 +18,7 @@ import {
   removeTokenLocalStorage,
 } from "../../features/AuthSlice";
 import nccLogo from '../../images/nccsoft_vietnam_logo.png'
-
+import { Navigate } from "react-router-dom";
 export interface NavbarProps {}
 
 export default function Navbar(props: NavbarProps) {
