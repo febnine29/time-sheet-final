@@ -10,6 +10,7 @@ import type {
 } from "../type/Auth";
 import { loginApi, registerApi } from "../api/authapi";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 import setToken from "../configs/setToken";
 import { RootState } from "../app/store";
 export interface AuthState {
@@ -25,6 +26,7 @@ export const login = createAsyncThunk(
     if (response.status === 200) {
       dispatch(setTokenLocalStorage(response.data.result.accessToken));
       setToken(response.data.result.accessToken);
+      
     } else {
       dispatch(removeTokenLocalStorage());
       setToken(null);

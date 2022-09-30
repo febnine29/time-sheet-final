@@ -19,11 +19,11 @@ export default function EditProject({
   onClose,
   currentProject,
 }: EditProjectProps) {
-  // Redux
+ 
   const dispatch = useAppDispatch();
   const { project } = useAppSelector(projectSelector);
-  // React Hook
   console.log('project', project)
+  
   useEffect(() => {
     if (currentProject) {
       dispatch(getSingleProject(`${getProjectApi}?input=${currentProject}`));

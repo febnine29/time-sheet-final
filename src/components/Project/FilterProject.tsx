@@ -15,7 +15,7 @@ export default function FilterProject({
 }: FilterProjectProps) {
   return (
     <Box mt={2}>
-      <Select mt={2} onChange={(e) => handleOnchangeOptionFilter(e)} placeholder='Filter Project'>
+      <Select mt={2} onChange={(e) => handleOnchangeOptionFilter(e)}>
         <option value={"0"} selected={currentStatusFilter === "0"}>
           Active Projects
         </option>

@@ -57,7 +57,11 @@ GeneralProps) {
             fieldState: { invalid, isTouched, isDirty, error },
             formState,
           }) => (
-            <Select onChange={(e) => onChange(+e.target.value)} onBlur={onBlur}>
+            <Select 
+              onChange={(e) => onChange(+e.target.value)} 
+              onBlur={onBlur}
+            >
+
               {customer?.map((item: any) => (
                 <option
                   selected={value === item.id}
@@ -139,7 +143,7 @@ GeneralProps) {
         </Text>
       </Flex>
       <FormControl id="projectType">
-        <FormLabel>Projcet Type*</FormLabel>
+        <FormLabel>Project Type*</FormLabel>
         <Select {...register("projectType", { valueAsNumber: true })}>
           <option value={0} defaultChecked>
             Time - Materials

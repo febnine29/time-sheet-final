@@ -61,3 +61,6 @@
     box-shadow: inset 8px 8px 8px #0199ad,
     inset -8px -8px 8px rgb(157, 249, 254);
 }
+.login .clearFocus:focus{
+    outline: none !important
+}

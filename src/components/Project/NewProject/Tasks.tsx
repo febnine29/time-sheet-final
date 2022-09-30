@@ -14,6 +14,7 @@ import {
 } from "../../../configs/transformTask";
 import { PayloadNewProject, TaskFormNewProject } from "../../../type/Project";
 import { Task } from "../../../type/Task";
+import { getAllTask, taskSelector } from "../../../features/TaskSlice";
 export interface TasksProps {
   tasks: Task[] | null;
   setValue: UseFormSetValue<Partial<PayloadNewProject>>;
@@ -63,20 +64,18 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
     );
   };
   useEffect(() => {
+    // dispatch(getAllTask())
     setTasksCpn(tasks);
-  }, [tasks]);
-
+  }, []);
+  useEffect(() => {
+    // const tasks = useSelector()
+  },[])
   useEffect(() => {
     if (tasksCpn) {
       setTasksCpn(deleteArrInArrById(tasksCpn, tasksCheck)!);
     }
   }, [flagTaskCheck]);
 
-  useEffect(() => {
-    if (tasksCpn) {
-      setTasksCpn(deleteArrInArrById(tasksCpn, tasksCheck)!);
-    }
-  }, [flagTaskCheck]);
   useEffect(() => {
     setValue("tasks", taskForm!);
   }, [taskForm]);
@@ -88,18 +87,18 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
     }
   }, [taskDefaultValue]);
   const dispatch = useDispatch()
-  const [renderTask, setRenderTask] = useState(false)
+  const [renderTask, setRenderTask] = useState(false) 
 
   return (
     <Box maxH="500px" overflowY="scroll">
-      <Flex justify="space-between">
+      <Flex justify="space-between" borderBottom="1px solid #f2f2f2">
         <Text fontWeight="bold">Tasks</Text>
         <Box></Box>
         <Text fontWeight="bold">Billable</Text>
       </Flex>
       <Box>
         {mergeObjectById(tasksCheck!)(taskForm!)?.map((task, index) => (
-          <Flex mt={2} justify="space-between" key={index}>
+          <Flex mt={2} justify="space-between" key={task.id}>
             <Flex
               boxSize="30px"
               bgColor="transparent"
@@ -126,16 +125,8 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
       </Box>
       <Box mt={2}>
         <Text fontWeight="bold">Select task</Text>
-        <Button 
-          my={2}
-          leftIcon={<RepeatIcon />} 
-          colorScheme='teal' 
-          variant='solid'
-          onClick={() => setRenderTask(true)}
-        >
-            Show Tasks
-        </Button>
-        {renderTask ? tasksCpn?.map((task) => (
+        
+        {tasksCpn?.map((task) => (
           <Flex mt={2} justify="space-between">
             <Flex
               boxSize="30px"
@@ -154,7 +145,7 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
             <Text mt={1} mr='auto'>{task.name}</Text>
             <Text mt={1}>{task.type === 0 ? "Common Task" : "Other Task"}</Text>
           </Flex>
-        )) : ''}
+        ))}
       </Box>
     </Box>
   );

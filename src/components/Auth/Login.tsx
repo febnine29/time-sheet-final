@@ -10,6 +10,7 @@ import {
   Text,
   VStack, InputGroup, InputRightElement
 } from "@chakra-ui/react";
+import {Eye, EyeOff} from 'react-feather'
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -74,6 +75,7 @@ export default function Login({ setTypeAuth }: LoginProps) {
         <FormControl id="password">
           <InputGroup size='md'>
             <Input
+              variant='outline'
               name="password"
               placeholder='Password'
               value={dataLogin.password}
@@ -82,9 +84,9 @@ export default function Login({ setTypeAuth }: LoginProps) {
               onChange={(e) => handleFormLogin(e)}
             />
             <InputRightElement width='4.5rem' mt={2}>
-              <Button h='1.75rem' size='sm' onClick={handleClick}>
-                {show ? 'Hide' : 'Show'}
-              </Button>
+              <button type="button" onClick={handleClick}>
+                {show ? <EyeOff /> : <Eye />}
+              </button>
             </InputRightElement>
         </InputGroup>
         </FormControl>

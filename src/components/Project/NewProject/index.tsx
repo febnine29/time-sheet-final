@@ -45,7 +45,6 @@ function SaveProject({ TYPE_SAVE, onClose, defaultValues }: SaveProjectProps) {
 
   const [users, setUsers] = useState<UserNotPagging[] | null>(null);
 
-  // React Hook Form
   const schema = yup
     .object({
       name: yup.string().min(1).max(50).required(),
