@@ -60,6 +60,11 @@ export default function TaskManager(props: TaskManagerProps) {
     });
     dispatch(setMess({ mess: "", type: "success" }));
   }
+  if (taskLoading) return <Spinner thickness='4px'
+                                    speed='0.65s'
+                                    emptyColor='gray.200'
+                                    color='red.500'
+                                    size='lg'/>;
   return (
     <Box width="100%" maxW="1200px" mr='1rem'>
       <Modal

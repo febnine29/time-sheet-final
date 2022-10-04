@@ -1,4 +1,5 @@
-import React, { Fragment, useLayoutEffect } from "react";
+import React, { Fragment, useEffect,useState, useLayoutEffect } from "react";
+import axios from 'axios'
 import Header from "./components/Common/Header";
 import Navbar from "./components/Common/Navbar";
 import "./App.css";
@@ -15,7 +16,11 @@ import { useAppDispatch } from "./app/hooks";
 import NotFound from "./components/Common/NotFound";
 import setToken from "./configs/setToken";
 import {useSelector} from "react-redux";
-import {authSelector} from "./features/AuthSlice"
+import {authSelector} from "./features/AuthSlice";
+import {getAllTask} from './features/TaskSlice'
+import {Customer} from './type/Customer';
+import {UserNotPagging} from './type/User';
+import {url} from './api/index'
 function App() {
   const dispatch = useAppDispatch();
 
@@ -33,6 +38,25 @@ function App() {
   //     </div>
   //   ) 
   // }
+  // const [customer, setCustomer] = useState<Customer[] | null>(null);
+
+  // const [users, setUsers] = useState<UserNotPagging[] | null>(null);
+  // const getUser = async () => {
+  //   const response = await axios.get(
+  //     `${url}/api/services/app/User/GetUserNotPagging`
+  //   );
+  //   setUsers(response.data.result);
+  // };
+
+  // const getCustomer = async () => {
+  //   const response = await axios.get(`${url}/api/services/app/Customer/GetAll`);
+  //   setCustomer(response.data.result);
+  // };
+  useEffect(() => {
+    // getUser();
+    // getCustomer();
+    dispatch(getAllTask());
+  })
   return (
     <Box className="App" w="100%" h="100vh">
       <Box display="flex" w="100%" h="100vh">

@@ -3,29 +3,21 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box,
-  Button,
-  Checkbox,
-  Code,
-  Flex,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
+  Box,Button,Checkbox,Code,
+  Flex,Table,Tbody,Td,Th,Thead,Tr,
   Text,Heading,AlertDialog,
   AlertDialogBody,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  useDisclosure,
-  useToast
+  useDisclosure,useToast,
+  Select,Show, Menu, MenuButton, MenuItem, MenuList
 } from "@chakra-ui/react";
-
+import {ChevronDownIcon, Icon} from '@chakra-ui/icons';
+import {Eye, Edit, X, Check, Trash2 } from 'react-feather'
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import {useDispatch, useSelector} from "react-redux"
 import { formatDay } from "../../configs/formatDay";
 import { transFormCheckProjects } from "../../configs/transformcheckProject";
@@ -83,9 +75,48 @@ export default function SingleProject({
     })
     onCloseDel()
   }
+  const [show, setShow] =useState(false)
+  // const handleDropDown = () => {
+  //   setShow(true)
+  // }
   return (
-    <Flex alignItems="center" >
-      <AccordionItem flex={1} >
+    <Flex alignItems="center" py={1} pr={2} borderBottom='1px solid #dddbdb'>
+      <Box>
+        <Text pl={2} fontWeight='bold' color='gray'>{dataProject.name}</Text>
+      </Box>
+      <Box ml='auto'>
+      <Menu>
+        <MenuButton as={Button} rightIcon={<ChevronDownIcon />} _focus={{boxShadow: 'none'}} bg='#f7f7f7' boxShadow='rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;'>
+          Actions
+        </MenuButton>
+        <MenuList w='100px'>
+          <MenuItem icon={<Icon h={5} w={5} as={Eye}/>}>
+            View
+          </MenuItem>
+          <MenuItem 
+            icon={<Icon h={5} w={5} as={Edit}/>}
+            onClick={() => {
+              setCurrentProject(dataProject.id);
+              onOpenEditProject();
+            }}
+          >
+            Edit
+          </MenuItem>
+          <MenuItem icon={dataProject.status ? <Icon h={5} w={5} as={X}/> : <Icon h={5} w={5} as={Check} />}>
+            Active
+          </MenuItem>
+          <MenuItem 
+            icon={<Icon h={5} w={5} as={Trash2}/>}
+            onClick={() => {
+              dispatch(addId(dataProject));
+              onOpenDel()
+            }}
+          >
+            Delete
+          </MenuItem>
+        </MenuList>
+      </Menu></Box>
+      {/* <AccordionItem flex={1} >
         <h2>
           <AccordionButton>
             <Box flex="1" textAlign="left">
@@ -129,7 +160,7 @@ export default function SingleProject({
             {/* <Button colorScheme="blue" size="sm" mr={2}>
               View
             </Button> */}
-            <Button
+            {/* <Button
               colorScheme="blue"
               size="sm"
               mr={2}
@@ -152,7 +183,8 @@ export default function SingleProject({
             </Button>
           </Box>
         </AccordionPanel>
-      </AccordionItem>
+      </AccordionItem> */} 
+      
       <AlertDialog
           motionPreset='slideInBottom'
           isOpen={isOpenDel}

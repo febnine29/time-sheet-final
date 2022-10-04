@@ -125,15 +125,13 @@ function SaveProject({ TYPE_SAVE, onClose, defaultValues }: SaveProjectProps) {
     const response = await axios.get(`${url}/api/services/app/Customer/GetAll`);
     setCustomer(response.data.result);
   };
-
-  const renderState = useSelector(renderSelector)
   useEffect(() => {
-    if(renderState.render){
-      
-    } 
-    getUser();
-    getCustomer();
-    dispatch(getAllTask());
+    // if(!exist){
+      getUser();
+      getCustomer();
+      // dispatch(getAllTask());
+    // } 
+    
   }, []);
 
   return (

@@ -8,7 +8,8 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React,{useState} from "react";
+import axios from 'axios'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -20,6 +21,7 @@ import {
 } from "react-hook-form";
 import type { Customer } from "../../../type/Customer";
 import { PayloadNewProject } from "../../../type/Project";
+import {url} from "../../../api/index"
 
 const DatePickerChakra = chakra(DatePicker);
 export interface GeneralProps {
@@ -45,6 +47,8 @@ function General({
 // handleIsAllUserBelongToCheckBox,
 // handleCustomerId,
 GeneralProps) {
+ 
+
   return (
     <div>
       <FormControl id="client">

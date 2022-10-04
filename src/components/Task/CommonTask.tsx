@@ -18,7 +18,7 @@ import {
 } from "../../features/TaskSlice";
 import { Task } from "../../type/Task";
 import {useSelector, useDispatch} from 'react-redux';
-import { alertSelector, storeId } from "../../features/AlertReducer";
+import { alertSelector, storeId, clearAlertData } from "../../features/AlertReducer";
 export interface CommonTaskProps {
   tasks: Task[] | null;
   handleClickEdit: (tasks: Task) => void;

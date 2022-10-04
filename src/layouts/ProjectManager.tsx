@@ -1,18 +1,11 @@
+import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
+import '@szhsin/react-menu/dist/transitions/slide.css';
 import { Spinner } from "@chakra-ui/spinner";
-import {
-  Accordion,
-  Box,
-  Button,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  useToast,
-  useDisclosure,
-  Select,
-  Input,
+import { 
+  Accordion,Box, Button, Alert, AlertIcon, AlertTitle, AlertDescription, useToast,useDisclosure,Select,Input,Flex, Text
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   deActiveProject,
@@ -25,7 +18,8 @@ import {
 import { transformProject } from "../configs/transformProject";
 import { Heading } from "@chakra-ui/layout";
 import SingleProject from "../components/Project/SingleProject";
-import { Code as CodeIcon, Plus } from "react-feather";
+import { Code as CodeIcon, Plus,Eye, Edit, X, Check, Trash2 } from "react-feather";
+import { Icon,ChevronDownIcon } from "@chakra-ui/icons";
 import { DataSingleProject } from "../type/Project";
 import Modal from "../components/Common/Modal";
 import SaveProject from "../components/Project/NewProject";
@@ -51,13 +45,8 @@ export default function ProjectManager(props: ProjectManagerProps) {
   const dispatch = useAppDispatch();
   const { projectLoading, projects, message } = useAppSelector(projectSelector);
   // React Hook
-  useEffect(() => {
-    dispatch(getAllProject({ search: "", status: "" }));
-  }, []);
-  const [projectCheck, setProjectCheck] = useState<DataSingleProject[] | []>(
-    []
-  );
-
+  
+  const [projectCheck, setProjectCheck] = useState<DataSingleProject[] | []>([]);
   const [currentProject, setCurrentProject] = useState<null | number>(null);
   // console.log('currentProject', projectCheck)
   const [currentStatusFilter, setCurrentStatusFilter] = useState("");
@@ -65,10 +54,6 @@ export default function ProjectManager(props: ProjectManagerProps) {
   // handle Action
   const handleClickDeactive = () => {
     dispatch(deActiveProject(projectCheck));
-    setProjectCheck([]);
-  };
-  const handleClickDelete = () => {
-    dispatch(deleteProject(projectCheck));
     setProjectCheck([]);
   };
   //
@@ -84,7 +69,7 @@ export default function ProjectManager(props: ProjectManagerProps) {
     dispatch(setMess({ mess: "", type: "success" }));
   }
   // Filter project
-  const valueDebounce = useDebounce<string>(inputFilter, 500);
+  const valueDebounce = useDebounce<string>(inputFilter, 700);
   useEffect(() => {
     dispatch(
       getAllProject({ status: currentStatusFilter, search: valueDebounce })
@@ -108,7 +93,10 @@ export default function ProjectManager(props: ProjectManagerProps) {
     setInputFilter(e.target.value);
   };
   // console.log('current status after', currentStatusFilter, 'etarget after', e.target.value)
-  console.log('render')
+  useEffect(() => {
+    // dispatch(getAllProject({ search: "", status: "" }));
+
+  }, []);
   return (
     <Box p={5} width="100%" maxW="1200px" m="0 auto">
       <Modal
@@ -147,7 +135,11 @@ export default function ProjectManager(props: ProjectManagerProps) {
         handleOnChangeInputFilter={handleOnChangeInputFilter}
         inputFilter={inputFilter}
       />
-      {/* {projectLoading && <Spinner />} */}
+      {projectLoading && <Spinner thickness='4px'
+                                  speed='0.65s'
+                                  emptyColor='gray.200'
+                                  color='red.500'
+                                  size='lg'/>}
 
       {transformProject(projects)?.map((item, index) => {
         return (
@@ -164,24 +156,91 @@ export default function ProjectManager(props: ProjectManagerProps) {
               {item.customerName.toUpperCase()}
             </Box>
             <Box
-              backgroundColor="red.20"
+              backgroundColor="red.50"
               borderBottomLeftRadius={5}
               borderBottomRightRadius={5}
             >
-              <Accordion allowToggle>
+              {/* {item.data.map((data, index) => {
+                <SingleProject
+                  key={data.id}
+                  dataProject={data}
+                  setProjectCheck={setProjectCheck}
+                  projectCheck={projectCheck}
+                  isOpenEditProject={isOpenEditProject}
+                  onOpenEditProject={onOpenEditProject}
+                  currentProject={currentProject}
+                  setCurrentProject={setCurrentProject}
+              />
+              })} */}
+              
                 {item.data.map((data, index) => (
-                  <SingleProject
-                    key={index}
-                    dataProject={data}
-                    setProjectCheck={setProjectCheck}
-                    projectCheck={projectCheck}
-                    isOpenEditProject={isOpenEditProject}
-                    onOpenEditProject={onOpenEditProject}
-                    currentProject={currentProject}
-                    setCurrentProject={setCurrentProject}
-                  />
+                  <Flex key={data.id} alignItems="center" py={1} pr={2} borderBottom='1px solid #dddbdb'>
+                    <Box>
+                      <Text pl={2} fontWeight='bold' color='gray'>{data.name}</Text>
+                    </Box>
+                    <Box ml='auto'> 
+                      <Menu menuButton={<MenuButton>Action</MenuButton>} transition>
+                        <MenuItem>View</MenuItem>
+                        <MenuItem 
+                              onClick={() => {
+                                setCurrentProject(data.id);
+                                onOpenEditProject();
+                              }}
+                        >Edit</MenuItem>
+                        <MenuItem>Delete</MenuItem>
+                      </Menu>
+                      {/* <Menu>
+                        <MenuButton as={Button} rightIcon={<ChevronDownIcon />} _focus={{boxShadow: 'none'}} bg='#f7f7f7' boxShadow='rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;'>
+                          Actions
+                        </MenuButton>
+                        <MenuList w='100px'>
+                          <MenuItem icon={<Icon h={5} w={5} as={Eye}/>}>
+                            View
+                          </MenuItem>
+                          <MenuItem 
+                            icon={<Icon h={5} w={5} as={Edit}/>}
+                            onClick={() => {
+                              // setCurrentProject(data.id);
+                              // onOpenEditProject();
+                            }}
+                          >
+                            Edit
+                          </MenuItem>
+                          <MenuItem icon={data.status ? <Icon h={5} w={5} as={X}/> : <Icon h={5} w={5} as={Check} />}>
+                            Active
+                          </MenuItem>
+                          <MenuItem 
+                            icon={<Icon h={5} w={5} as={Trash2}/>}
+                            onClick={() => {
+                              // dispatch(addId(dataProject));
+                              // onOpenDel()
+                            }}
+                          >
+                            Delete
+                          </MenuItem>
+                        </MenuList>
+                      </Menu> */}
+                      {/* <Button 
+                        onClick={() => {
+                                setCurrentProject(data.id);
+                                onOpenEditProject();
+                              }}
+                      
+                      >Edit</Button> */}
+                    </Box>
+                  </Flex>
+                  // <SingleProject
+                  //   key={index}
+                  //   dataProject={data}
+                  //   setProjectCheck={setProjectCheck}
+                  //   projectCheck={projectCheck}
+                  //   isOpenEditProject={isOpenEditProject}
+                  //   onOpenEditProject={onOpenEditProject}
+                  //   currentProject={currentProject}
+                  //   setCurrentProject={setCurrentProject}
+                  // />
+                  
                 ))}
-              </Accordion>
             </Box>
           </Box>
         );

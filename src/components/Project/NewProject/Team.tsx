@@ -2,9 +2,11 @@ import { Avatar } from "@chakra-ui/avatar";
 import { Box, Divider } from "@chakra-ui/layout";
 import { Code, Flex, Icon, Input, Select, Text, IconButton,Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
+import {url} from '../../../api/index'
 import { Minus, Plus,X } from "react-feather";
 import { RepeatIcon } from "@chakra-ui/icons";
-
+import {useDispatch} from 'react-redux'
 import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import {
   checkBranch,
@@ -24,6 +26,7 @@ import {
 } from "../../../configs/transformUser";
 import { PayloadNewProject, UserFormNewProject } from "../../../type/Project";
 import { UserNotPagging } from "../../../type/User";
+// import {getUser} from '../../../features/TaskSlice'
 export interface TeamProps {
   users: UserNotPagging[] | null;
   setUsers: (params: UserNotPagging[]) => void;
@@ -53,6 +56,9 @@ function Team({
   setValue,
   userDefaultValues,
 }: TeamProps) {
+  const dispatch = useDispatch()
+  
+  // const [users, setUsers] = useState<UserNotPagging[] | null>(null);
   const [userCheck, setUserCheck] = useState<UserNotPagging[] | null>(null);
   const [userForm, setUserForm] = useState<UserFormNewProject[] | null>(null);
   const [flagUserCheck, setFlagUserCheck] = useState({});
@@ -62,6 +68,12 @@ function Team({
     level: { index: -1 },
     name: { nameString: "" },
   });
+  const getUser = async () => {
+    const response = await axios.get(
+      `${url}/api/services/app/User/GetUserNotPagging`
+    );
+    setUsers(response.data.result);
+  };
   // -1 if default check All
   const handleClickAdd = (item: UserNotPagging) => {
     //handle check userCheck
@@ -124,6 +136,9 @@ function Team({
   const handleRenderMembers = () => {
     setRender(true)
   }
+  // useEffect(() => {
+  //   dispatch(getUser())
+  // },[])
   return (
     <Box maxH="500px" overflowY="scroll">
       <Box mb={2} fontWeight="bold">

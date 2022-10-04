@@ -20,10 +20,13 @@ const AlertSlice = createSlice({
     reducers: {
         storeId: (state, action) => {
             state.task = action.payload;
-
+        },
+        clearAlertData: (state, action) => {
+            state.task = initialState.task
+            console.log('state task', state.task)
         }
     }
 }) 
-export const {storeId} = AlertSlice.actions
+export const {storeId, clearAlertData} = AlertSlice.actions
 export const alertSelector = (state: RootState) => state.alert
 export default AlertSlice.reducer
