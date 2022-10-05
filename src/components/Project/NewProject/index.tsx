@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 import { projectSelector, saveProject } from "../../../features/ProjectSlice";
 import { renderSelector } from "../../../features/ConfirmRender";
 import { setMess, taskSelector, getAllTask } from "../../../features/TaskSlice";
-
+import { customerSelector, userSelector } from "../../../features/StoreId";
 import type { Customer } from "../../../type/Customer";
 import type { PayloadNewProject } from "../../../type/Project";
 import type { UserNotPagging } from "../../../type/User";
@@ -113,25 +113,11 @@ function SaveProject({ TYPE_SAVE, onClose, defaultValues }: SaveProjectProps) {
     dispatch(setMess({ mess: "", type: "success" }));
   }
 
-  // Fetch Api
-  const getUser = async () => {
-    const response = await axios.get(
-      `${url}/api/services/app/User/GetUserNotPagging`
-    );
-    setUsers(response.data.result);
-  };
-
-  const getCustomer = async () => {
-    const response = await axios.get(`${url}/api/services/app/Customer/GetAll`);
-    setCustomer(response.data.result);
-  };
+  const getCustomers = useSelector(customerSelector)
+  const getUsers = useSelector(userSelector)
   useEffect(() => {
-    // if(!exist){
-      getUser();
-      getCustomer();
-      // dispatch(getAllTask());
-    // } 
-    
+    setCustomer(getCustomers.customers)
+    setUsers(getUsers.users)
   }, []);
 
   return (

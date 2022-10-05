@@ -68,9 +68,6 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
     setTasksCpn(tasks);
   }, []);
   useEffect(() => {
-    // const tasks = useSelector()
-  },[])
-  useEffect(() => {
     if (tasksCpn) {
       setTasksCpn(deleteArrInArrById(tasksCpn, tasksCheck)!);
     }
@@ -125,7 +122,7 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
       </Box>
       <Box mt={2}>
         <Text fontWeight="bold">Select task</Text>
-        
+        {/* <button onClick={() => setRenderTask(true) } style={{marginBottom: '20px'}}>Show Tasks</button> */}
         {tasksCpn?.map((task) => (
           <Flex mt={2} justify="space-between">
             <Flex
@@ -145,7 +142,8 @@ function Tasks({ tasks, setValue, taskDefaultValue }: TasksProps) {
             <Text mt={1} mr='auto'>{task.name}</Text>
             <Text mt={1}>{task.type === 0 ? "Common Task" : "Other Task"}</Text>
           </Flex>
-        ))}
+        )) }
+
       </Box>
     </Box>
   );

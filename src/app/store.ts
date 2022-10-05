@@ -3,7 +3,9 @@ import AuthSliceReducer from "../features/AuthSlice";
 import TaskSliceReducer from "../features/TaskSlice";
 import ProjectSliceReducer from "../features/ProjectSlice";
 import AlertReducer from "../features/AlertReducer";
-import storeid from "../features/StoreId"
+import storeid from "../features/StoreId";
+import customers from "../features/StoreId";
+import users from "../features/StoreId";
 import isRender from "../features/ConfirmRender"
 const store = configureStore({
   reducer: {
@@ -12,7 +14,9 @@ const store = configureStore({
     project: ProjectSliceReducer,
     alert: AlertReducer,
     storeId: storeid,
-    render: isRender
+    render: isRender,
+    user: users,
+    customer: customers
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

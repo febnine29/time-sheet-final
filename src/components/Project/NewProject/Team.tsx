@@ -284,7 +284,7 @@ function Team({
           </Box>
         </Flex>
         <Box>
-          <Button 
+          <Button
             mb={4}
             leftIcon={<RepeatIcon />} 
             colorScheme='teal' 

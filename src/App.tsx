@@ -20,6 +20,7 @@ import {authSelector} from "./features/AuthSlice";
 import {getAllTask} from './features/TaskSlice'
 import {Customer} from './type/Customer';
 import {UserNotPagging} from './type/User';
+import { storeUsers, storeCustomers } from "./features/StoreId";
 import {url} from './api/index'
 function App() {
   const dispatch = useAppDispatch();
@@ -38,23 +39,18 @@ function App() {
   //     </div>
   //   ) 
   // }
-  // const [customer, setCustomer] = useState<Customer[] | null>(null);
+  const getUser = async () => {
+    const response = await axios.get(`${url}/api/services/app/User/GetUserNotPagging`);
+    dispatch(storeUsers(response.data.result));
+  };
 
-  // const [users, setUsers] = useState<UserNotPagging[] | null>(null);
-  // const getUser = async () => {
-  //   const response = await axios.get(
-  //     `${url}/api/services/app/User/GetUserNotPagging`
-  //   );
-  //   setUsers(response.data.result);
-  // };
-
-  // const getCustomer = async () => {
-  //   const response = await axios.get(`${url}/api/services/app/Customer/GetAll`);
-  //   setCustomer(response.data.result);
-  // };
+  const getCustomer = async () => {
+    const response = await axios.get(`${url}/api/services/app/Customer/GetAll`);
+    dispatch(storeCustomers(response.data.result));
+  };
   useEffect(() => {
-    // getUser();
-    // getCustomer();
+    getUser();
+    getCustomer();
     dispatch(getAllTask());
   })
   return (

@@ -8,7 +8,6 @@ import {
   getAllTaskApi,
   saveTaskApi,
 } from "../api/taskapi";
-import {url} from '../api/index'
 import { RootState } from "../app/store";
 
 type TypeMess = "info" | "warning" | "success" | "error" | undefined;
@@ -25,12 +24,9 @@ interface TaskState {
 
 export const getAllTask = createAsyncThunk("task/getAll", async () => {
   const response = await axios.get<ResponseGetTask>(getAllTaskApi);
+
   return response.data;
 });
-// export const getUser = createAsyncThunk("task/getUser", async () => {
-//   const response = await axios.get(`${url}/api/services/app/User/GetUserNotPagging`);
-//   return response.data;
-// });
 export const editTask = createAsyncThunk(
   "task/editTask",
   async (dataForm: Task, { dispatch }) => {
@@ -119,7 +115,6 @@ export const deleteTask = createAsyncThunk(
   async (id: number, { dispatch }) => {
     try {
       const response = await axios.delete(`${deleteTaskApi}?Id=${id}`);
-
       if (response.status === 200) {
         dispatch(getAllTask());
         dispatch(
