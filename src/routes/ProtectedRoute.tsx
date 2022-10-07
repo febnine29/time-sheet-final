@@ -10,8 +10,5 @@ export default function ProtectedRoute({ children }: any) {
   const { authLoading, isAuthenticate } = useAppSelector(authSelector);
   const location = useLocation();
   
-  return isAuthenticate ? (
-          children) : (
-    <Navigate to="/" state={location.pathname} />
-  );
+  return isAuthenticate ? (children) : (<Navigate to="/" state={location.pathname} />);
 }

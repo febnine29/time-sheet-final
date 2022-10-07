@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import {
   getAllProjectApi,   
+  activeProjectApi,
   inActiveProjectApi,
   deleteProjectApi,
   addProjectApi,
@@ -48,6 +49,34 @@ export const getAllProject = createAsyncThunk(
     } catch (error) {
       console.log(error);
     }
+  }
+);
+export const activeProject = createAsyncThunk(
+  "project/activeProject",
+  async (data: DataSingleProject[] | [], { dispatch }) => {
+    Promise.all(
+      data.map((item) =>
+        axios
+          .post(activeProjectApi, { id: item.id })
+          .then((result) => {
+            dispatch(
+              setMess({
+                type: "success",
+                mess: `${item.name} DeActive Success`,
+              })
+            );
+          })
+          .catch((error) => {
+            dispatch(
+              setMess({ type: "error", mess: `${item.name} DeActive Error` })
+            );
+          })
+      )
+    )
+      .then((result) => {
+        dispatch(getAllProject());
+      })
+      .catch((error) => console.log(error));
   }
 );
 export const deActiveProject = createAsyncThunk(

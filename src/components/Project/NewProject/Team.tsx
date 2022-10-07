@@ -6,7 +6,7 @@ import axios from 'axios';
 import {url} from '../../../api/index'
 import { Minus, Plus,X } from "react-feather";
 import { RepeatIcon } from "@chakra-ui/icons";
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import {
   checkBranch,
@@ -26,6 +26,8 @@ import {
 } from "../../../configs/transformUser";
 import { PayloadNewProject, UserFormNewProject } from "../../../type/Project";
 import { UserNotPagging } from "../../../type/User";
+import { userSelector } from "../../../features/StoreId";
+import { taskSelector } from "../../../features/TaskSlice";
 // import {getUser} from '../../../features/TaskSlice'
 export interface TeamProps {
   users: UserNotPagging[] | null;
@@ -57,7 +59,11 @@ function Team({
   userDefaultValues,
 }: TeamProps) {
   const dispatch = useDispatch()
-  
+  // const getUsers = useSelector(userSelector)
+  // const [users, setUsers] = useState<UserNotPagging[] | null>(null);
+  // useEffect(() => {
+  //   setUsers(getUsers.users)
+  // })
   // const [users, setUsers] = useState<UserNotPagging[] | null>(null);
   const [userCheck, setUserCheck] = useState<UserNotPagging[] | null>(null);
   const [userForm, setUserForm] = useState<UserFormNewProject[] | null>(null);
@@ -68,12 +74,6 @@ function Team({
     level: { index: -1 },
     name: { nameString: "" },
   });
-  const getUser = async () => {
-    const response = await axios.get(
-      `${url}/api/services/app/User/GetUserNotPagging`
-    );
-    setUsers(response.data.result);
-  };
   // -1 if default check All
   const handleClickAdd = (item: UserNotPagging) => {
     //handle check userCheck
@@ -140,6 +140,7 @@ function Team({
   //   dispatch(getUser())
   // },[])
   return (
+    
     <Box maxH="500px" overflowY="scroll">
       <Box mb={2} fontWeight="bold">
         Selected Team Members

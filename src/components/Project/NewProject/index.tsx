@@ -42,7 +42,6 @@ function SaveProject({ TYPE_SAVE, onClose, defaultValues }: SaveProjectProps) {
   const { tasks } = useAppSelector(taskSelector);
   //
   const [customer, setCustomer] = useState<Customer[] | null>(null);
-
   const [users, setUsers] = useState<UserNotPagging[] | null>(null);
 
   const schema = yup
@@ -64,7 +63,7 @@ function SaveProject({ TYPE_SAVE, onClose, defaultValues }: SaveProjectProps) {
     getValues,
     control,
   } = useForm<PayloadNewProject>({
-    defaultValues: defaultValues || {
+      defaultValues: defaultValues || {
       projectTargetUsers: [],
       isAllUserBelongTo: false,
       customerId: customer?.[0].id,
@@ -147,7 +146,7 @@ function SaveProject({ TYPE_SAVE, onClose, defaultValues }: SaveProjectProps) {
                 setValue={setValue}
                 userDefaultValues={defaultValues?.users}
               />
-            )}
+             )} 
           </TabPanel>
           <TabPanel>
             {tasks && (

@@ -13,13 +13,15 @@ import axios from 'axios';
 import {useSelector} from 'react-redux'
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
+  activeProject,
   deActiveProject,
   deleteProject,
   getAllProject,
   projectSelector,
   setMess,
 } from "../features/ProjectSlice";
-import { deleteProjectApi } from '../api/projectapi';
+import {ResultResponseGetAllProject} from "../type/Project"
+import { activeProjectApi,inActiveProjectApi, deleteProjectApi } from '../api/projectapi';
 import {addId, idSelector} from "../features/StoreId"
 import { transformProject } from "../configs/transformProject";
 import { Heading } from "@chakra-ui/layout";
@@ -51,18 +53,12 @@ export default function ProjectManager(props: ProjectManagerProps) {
   const dispatch = useAppDispatch();
   const { projectLoading, projects, message } = useAppSelector(projectSelector);
   // React Hook
-  
+  // const [projects, setProjects] = useState<ResultResponseGetAllProject | null>(null)
   const [projectCheck, setProjectCheck] = useState<DataSingleProject[] | []>([]);
   const [currentProject, setCurrentProject] = useState<null | number>(null);
   // console.log('currentProject', projectCheck)
   const [currentStatusFilter, setCurrentStatusFilter] = useState("");
   const [inputFilter, setInputFilter] = useState("");
-  // handle Action
-  const handleClickDeactive = () => {
-    dispatch(deActiveProject(projectCheck));
-    setProjectCheck([]);
-  };
-  //
   if (message.mess) {
     console.log("oke set toast");
     toast({
@@ -104,8 +100,18 @@ export default function ProjectManager(props: ProjectManagerProps) {
     isOpen: isOpenDel, 
     onOpen: onOpenDel, 
     onClose: onCloseDel} = useDisclosure();
+  const {
+    isOpen: isOpenActive,
+    onOpen: onOpenActive,
+    onClose: onCloseActive} = useDisclosure();
+    const {
+      isOpen: isOpenUnactive,
+      onOpen: onOpenUnactive,
+      onClose: onCloseUnactive} = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null)
   const getId = useSelector(idSelector)
+  // const getProject = useSelector(projectSelector)
+
   const handleDelete = () => {
     axios.delete(`${deleteProjectApi}?Id=${getId.pId.id}`)
     .then(response => {
@@ -115,7 +121,8 @@ export default function ProjectManager(props: ProjectManagerProps) {
           position: 'bottom-right',
           duration: 2000,
           isClosable: true,
-      })
+      });
+      dispatch(getAllProject())
     })
     .catch( error => {
       toast({
@@ -128,7 +135,52 @@ export default function ProjectManager(props: ProjectManagerProps) {
     })
     onCloseDel()
   }
-  const [openPop, setOpenPop] = useState(false)
+  const handleActive = () => {
+    axios.post(`${activeProjectApi}`, {id: getId.pId.id})
+    .then(response => {
+      toast({
+        title: `Active Project ${getId.pId.name} Success`,
+        status: 'success',
+        position: 'bottom-right',
+        duration: 2000,
+        isClosable: true,
+      });
+      dispatch(getAllProject())
+    })
+    .catch( error => {
+      toast({
+        title: `Active Project ${getId.pId.name} Failed`,
+          status: 'error',
+          position: 'bottom-right',
+          duration: 2000,
+          isClosable: true,
+      })
+    })
+    onCloseActive()
+  }
+  const handleUnActive = () => {
+    axios.post(`${inActiveProjectApi}`, {id: getId.pId.id})
+    .then(response => {
+      toast({
+        title: `Unactive Project ${getId.pId.name} Success`,
+        status: 'success',
+        position: 'bottom-right',
+        duration: 2000,
+        isClosable: true,
+      });
+      dispatch(getAllProject())
+    })
+    .catch( error => {
+      toast({
+        title: `Unactive Project ${getId.pId.name} Failed`,
+          status: 'error',
+          position: 'bottom-right',
+          duration: 2000,
+          isClosable: true,
+      })
+    })
+    onCloseUnactive()
+  }
   const styleButton = {
     width: '80px', 
     display: 'flex', 
@@ -138,10 +190,6 @@ export default function ProjectManager(props: ProjectManagerProps) {
     padding: '5px 0px',
     borderRadius: '5px',
     border: '1px solid lightgray',
-  }
-  const styleText = {
-    borderRadius: '5px',
-    color: 'white'
   }
   return (
     <Box p={5} width="100%" maxW="1200px" m="0 auto">
@@ -154,9 +202,6 @@ export default function ProjectManager(props: ProjectManagerProps) {
         }
         title="Create Project"
       />
-      {/* <PopPop open={openPop}>
-
-      </PopPop> */}
       <Modal
         isOpen={isOpenEditProject}
         onOpen={onOpenEditProject}
@@ -228,28 +273,53 @@ export default function ProjectManager(props: ProjectManagerProps) {
                       <Text pl={2} fontWeight='bold' color='gray'>{data.name}</Text>
                     </Box>
                     <Box display='flex' flexWrap='wrap'>
-                      <span style={{background: '#2E95EA', color: 'white', borderRadius: '10px', padding: '0px 5px', fontSize: '14px', marginLeft: '5px'}}>{data.pms.join(', ')}</span>
-                      <span style={{background: 'red', color: 'white', borderRadius: '10px', padding: '0px 5px', fontSize: '14px', marginLeft: '5px'}}>{data.activeMember} members</span>
-                      <span style={{background: '#4CAF50', color: 'white', borderRadius: '10px', padding: '0px 5px', fontSize: '14px', marginLeft: '5px'}}><span style={{padding: '0px', margin: '0'}}>{dayjs(data.timeStart).format('DD/MM/YYYY')}</span> {data.timeEnd ? <span style={{padding: '0px', margin: '0'}}>- {dayjs(data.timeEnd).format('DD/MM/YYYY')}</span>:""}</span>
+                      <span style={{background: '#2E95EA', color: 'white', borderRadius: '10px', padding: '0px 7px', fontSize: '13px',fontWeight: 'bold', margin: '1px 0px 2px 5px'}}>{data.pms.join(', ')}</span>
+                      <span style={{background: 'red', color: 'white', borderRadius: '10px', padding: '0px 7px', fontSize: '13px',fontWeight: 'bold', margin: '1px 0px 2px 5px'}}>{data.activeMember} members</span>
+                      <span style={{background: '#4CAF50', color: 'white', borderRadius: '10px', padding: '0px 7px', fontSize: '13px',fontWeight: 'bold', margin: '1px 0px 2px 5px'}}><span style={{padding: '0px', margin: '0'}}>{dayjs(data.timeStart).format('DD/MM/YYYY')}</span> {data.timeEnd ? <span style={{padding: '0px', margin: '0'}}>- {dayjs(data.timeEnd).format('DD/MM/YYYY')}</span>:""}</span>
                       
                       
                     </Box>
 
                     <Box ml='auto' display='flex' alignItems='center'> 
-                      <span className='active-status' style={{marginLeft: 'auto',color: 'white', borderRadius: '10px', padding: '0px 55', fontSize: '14px',}}>{data.status  ? <span style={{background: 'grey',color: 'white', borderRadius: '10px', padding: '0px 5px', fontSize: '14px', paddingBottom: '3px'}}>InActive</span> 
-                                          : <span style={{background: '#4CAF50',color: 'white', borderRadius: '10px', padding: '0px 5px', fontSize: '14px', paddingBottom: '3px'}}>Active</span>}</span>
+                      <span className='active-status' style={{marginLeft: 'auto',color: 'white', borderRadius: '2px', padding: '0px 7px', fontSize: '13px',fontWeight: 'bold', marginRight: '5px'}}>{data.status  ? <span style={{background: 'grey',color: 'white', borderRadius: '2px', padding: '0px 5px', fontSize: '13px', paddingBottom: '3px'}}>InActive</span> 
+                                          : <span style={{background: '#4CAF50',color: 'white', borderRadius: '2px', padding: '0px 7px', fontSize: '13px',fontWeight: 'bold', paddingBottom: '3px'}}>Active</span>}</span>
+                      
                       <Menu menuButton={<MenuButton style={styleButton}>
                           Action <Feather.ChevronDown size={20} />
                           </MenuButton>} transition>
+                        {data.status ? 
+                          <MenuItem 
+                              style={{marginBottom: '10px'}}
+                              onClick={() => {
+                                dispatch(addId(data))
+                                onOpenActive()
+                              }}
+                          >
+                            <Feather.Check size={20} style={{marginRight: '15px'}}/>
+                            Active
+                          </MenuItem> 
+                          : 
+                          <MenuItem 
+                              style={{marginBottom: '10px'}}
+                              onClick={() => {
+                                dispatch(addId(data))
+                                onOpenUnactive()
+                              }}
+                          >
+                            <Feather.X size={20} style={{marginRight: '15px'}}/>
+                            Unactive
+                          </MenuItem>
+                        }
                         <MenuItem style={{marginBottom: '10px'}}>
                           <Feather.Eye size={20} style={{marginRight: '15px'}}/>
                           View
                         </MenuItem>
-                        <MenuItem  style={{marginBottom: '10px'}}
-                              onClick={() => {
-                                setCurrentProject(data.id);
-                                onOpenEditProject();
-                              }}
+                        <MenuItem  
+                          style={{marginBottom: '10px'}}
+                          onClick={() => {
+                            setCurrentProject(data.id);
+                            onOpenEditProject();
+                          }}
                         >
                           <Feather.Edit size={20} style={{marginRight: '15px'}}/>
                           Edit
@@ -265,44 +335,7 @@ export default function ProjectManager(props: ProjectManagerProps) {
                           Delete
                         </MenuItem>
                       </Menu>
-                      {/* <Menu>
-                        <MenuButton as={Button} rightIcon={<ChevronDownIcon />} _focus={{boxShadow: 'none'}} bg='#f7f7f7' boxShadow='rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;'>
-                          Actions
-                        </MenuButton>
-                        <MenuList w='100px'>
-                          <MenuItem icon={<Icon h={5} w={5} as={Eye}/>}>
-                            View
-                          </MenuItem>
-                          <MenuItem 
-                            icon={<Icon h={5} w={5} as={Edit}/>}
-                            onClick={() => {
-                              // setCurrentProject(data.id);
-                              // onOpenEditProject();
-                            }}
-                          >
-                            Edit
-                          </MenuItem>
-                          <MenuItem icon={data.status ? <Icon h={5} w={5} as={X}/> : <Icon h={5} w={5} as={Check} />}>
-                            Active
-                          </MenuItem>
-                          <MenuItem 
-                            icon={<Icon h={5} w={5} as={Trash2}/>}
-                            onClick={() => {
-                              // dispatch(addId(dataProject));
-                              // onOpenDel()
-                            }}
-                          >
-                            Delete
-                          </MenuItem>
-                        </MenuList>
-                      </Menu> */}
-                      {/* <Button 
-                        onClick={() => {
-                                setCurrentProject(data.id);
-                                onOpenEditProject();
-                              }}
                       
-                      >Edit</Button> */}
                     </Box>
                   </Flex>
                   // <SingleProject
@@ -321,7 +354,8 @@ export default function ProjectManager(props: ProjectManagerProps) {
           </Box>
         );
       })}
-       <AlertDialog
+      {/* ---------------ALERT DIALOG------------------ */}
+        <AlertDialog
           motionPreset='slideInBottom'
           isOpen={isOpenDel}
           leastDestructiveRef={cancelRef}
@@ -341,6 +375,58 @@ export default function ProjectManager(props: ProjectManagerProps) {
               </Button>
               <Button colorScheme='red' onClick={handleDelete} ml={3}>
                 Delete
+              </Button>
+            </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialogOverlay>
+        </AlertDialog>
+
+        <AlertDialog
+          motionPreset='slideInBottom'
+          isOpen={isOpenActive}
+          leastDestructiveRef={cancelRef}
+          onClose={onCloseActive}
+        >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold' display='flex'>
+              Active Project: <Text pl='4' pr='2' fontStyle='italic'>{getId.pId.name}</Text>?
+            </AlertDialogHeader>
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onCloseActive}>
+                Cancel
+              </Button>
+              <Button colorScheme='red' onClick={handleActive} ml={3}>
+                Active
+              </Button>
+            </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialogOverlay>
+        </AlertDialog>
+
+        <AlertDialog
+          motionPreset='slideInBottom'
+          isOpen={isOpenUnactive}
+          leastDestructiveRef={cancelRef}
+          onClose={onCloseUnactive}
+        >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold' display='flex'>
+              Unctive Project: <Text pl='4' pr='2' fontStyle='italic'>{getId.pId.name}</Text>?
+            </AlertDialogHeader>
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onCloseUnactive}>
+                Cancel
+              </Button>
+              <Button colorScheme='red' onClick={handleUnActive} ml={3}>
+                Unactive
               </Button>
             </AlertDialogFooter>
             </AlertDialogContent>
