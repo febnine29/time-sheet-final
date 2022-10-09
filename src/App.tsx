@@ -8,6 +8,7 @@ import Home from "./layouts/Home";
 import TaskManager from "./layouts/TaskManager";
 import ProjectManager from "./layouts/ProjectManager";
 import Auth from "./layouts/Auth";
+import TestPage from "./layouts/TestPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { Routes, Route } from "react-router-dom";
 import { getCurLoginInfo } from "./features/AuthSlice";
@@ -61,6 +62,10 @@ function App() {
                 <Box w="100%" h="100vh" className="app">
                   <Auth />
                 </Box>} />
+          <Route path="/test-page" element={
+          <Box w="100%" h="100vh" className="app">
+            <TestPage />
+          </Box>} />
           <Route
             path="/home"
             element={

@@ -1,13 +1,19 @@
 import { Box, Flex, Heading, Avatar} from "@chakra-ui/react";
 import {Menu, MenuButton, MenuItem} from "@szhsin/react-menu"
 import React, { useState } from "react";
+import {useDispatch} from 'react-redux'
 import '../../css/custom.css';
 import { HamburgerIcon } from "@chakra-ui/icons";
 import * as Feather from "react-feather"
 import { IconButton} from "@chakra-ui/react";
 import nccLogo from '../../images/nccsoft_vietnam_logo.png'
+import { storeThemeColor } from "../../features/StoreId";
+// import 
+
 export interface HeaderProps {}
 export default function Header(props: HeaderProps) {
+  const dispatch = useDispatch()
+
   const dataColor = [
     "gray.400",
     "red.400",
@@ -37,13 +43,15 @@ export default function Header(props: HeaderProps) {
           </Heading>
         </Box>
         <Box>
-          <Menu menuButton={<MenuButton style={{color: 'white'}}><Feather.Menu /></MenuButton>} transition>
+          <Menu menuButton={<MenuButton style={{color: 'white', paddingRight: '10px', paddingTop: '5px'}}><Feather.Menu /></MenuButton>} transition>
             {dataColor.map((item, index) => (
               <MenuItem  
                 key={index}
                 value="Copy"
                 onClick={(e) => {
                   e.keepOpen = true;
+                  // localStorage.setItem('themeColor', item)
+                  dispatch(storeThemeColor(item))
                   setColor(item)
                 }}
               >

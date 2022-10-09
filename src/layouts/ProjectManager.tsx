@@ -34,6 +34,7 @@ import SaveProject from "../components/Project/NewProject";
 import EditProject from "../components/Project/EditProject";
 import FilterProject from "../components/Project/FilterProject";
 import useDebounce from "../customHooks/useDebounce";
+import {themeSelector} from "../features/StoreId"
 export interface ProjectManagerProps {}
 
 export default function ProjectManager(props: ProjectManagerProps) {
@@ -191,6 +192,10 @@ export default function ProjectManager(props: ProjectManagerProps) {
     borderRadius: '5px',
     border: '1px solid lightgray',
   }
+  const [color, setColor] = useState('blue.400')
+  const {themeColor} = useSelector(themeSelector)
+  
+
   return (
     <Box p={5} width="100%" maxW="1200px" m="0 auto">
       <Modal
@@ -217,10 +222,11 @@ export default function ProjectManager(props: ProjectManagerProps) {
       <Box mb={5} display='flex' justifyContent='center'>
         <Button
           leftIcon={<Plus />}
-          colorScheme="green"
+          bgColor={themeColor ? themeColor : 'blue.400'}
+          color='white'
           onClick={onOpenNewProject}
         >
-          Create New Project
+          New Project
         </Button>
       </Box>
       <FilterProject
@@ -232,7 +238,7 @@ export default function ProjectManager(props: ProjectManagerProps) {
       {projectLoading && <Spinner thickness='4px'
                                   speed='0.65s'
                                   emptyColor='gray.200'
-                                  color='red.500'
+                                  color={themeColor}
                                   size='lg'/>}
 
       {transformProject(projects)?.map((item, index) => {
@@ -242,7 +248,7 @@ export default function ProjectManager(props: ProjectManagerProps) {
               fontSize="20px"
               fontWeight="bold"
               color="white"
-              backgroundColor="red.400"
+              backgroundColor={themeColor ? themeColor : 'blue.400'}
               p={2}
               borderTopLeftRadius={5}
               borderTopRightRadius={5}
@@ -250,7 +256,7 @@ export default function ProjectManager(props: ProjectManagerProps) {
               {item.customerName.toUpperCase()}
             </Box>
             <Box
-              backgroundColor="red.50"
+              backgroundColor={themeColor ? themeColor.replace('.400', '.50') : 'blue.50'}
               borderBottomLeftRadius={5}
               borderBottomRightRadius={5}
             >
@@ -268,7 +274,7 @@ export default function ProjectManager(props: ProjectManagerProps) {
               })} */}
               
                 {item.data.map((data, index) => (
-                  <Flex key={data.id} alignItems="center" py={1} pr={2} borderBottom='1px solid #dddbdb'>
+                  <Flex key={data.id}  alignItems="center" py={1} pr={2} borderBottom='1px solid #dddbdb'>
                     <Box>
                       <Text pl={2} fontWeight='bold' color='gray'>{data.name}</Text>
                     </Box>

@@ -6,7 +6,8 @@ import AlertReducer from "../features/AlertReducer";
 import storeid from "../features/StoreId";
 import customers from "../features/StoreId";
 import users from "../features/StoreId";
-import isRender from "../features/ConfirmRender"
+import isRender from "../features/ConfirmRender";
+import themeColor from "../features/StoreId"
 const store = configureStore({
   reducer: {
     auth: AuthSliceReducer,
@@ -16,7 +17,8 @@ const store = configureStore({
     storeId: storeid,
     render: isRender,
     user: users,
-    customer: customers
+    customer: customers,
+    theme: themeColor
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

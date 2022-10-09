@@ -7,7 +7,8 @@ import {UserNotPagging} from "../type/User"
 interface idState{
     pId: DataSingleProject,
     users: UserNotPagging[],
-    customers: Customer[] 
+    customers: Customer[],
+    themeColor: string
 }
 const initialState: idState = {
     pId: {
@@ -22,7 +23,8 @@ const initialState: idState = {
         id: 0
     },
     users: [],
-    customers: []
+    customers: [],
+    themeColor: ''
 }
 const storeidSlice = createSlice({
     name: 'storeId',
@@ -36,11 +38,16 @@ const storeidSlice = createSlice({
         },
         storeCustomers:(state, action) => {
             state.customers = action.payload
+        },
+        storeThemeColor:(state, action) => {
+            state.themeColor = action.payload
+            console.log()
         }
     }
 })
-export const {addId, storeUsers ,storeCustomers} = storeidSlice.actions
+export const {addId, storeUsers ,storeCustomers, storeThemeColor} = storeidSlice.actions
 export const idSelector = (state: RootState) => state.storeId
 export const userSelector = (state: RootState) => state.user
 export const customerSelector = (state: RootState) => state.customer
+export const themeSelector = (state: RootState) => state.theme
 export default storeidSlice.reducer

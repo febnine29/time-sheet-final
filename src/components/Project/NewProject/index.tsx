@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 import { projectSelector, saveProject } from "../../../features/ProjectSlice";
 import { renderSelector } from "../../../features/ConfirmRender";
 import { setMess, taskSelector, getAllTask } from "../../../features/TaskSlice";
-import { customerSelector, userSelector } from "../../../features/StoreId";
+import { customerSelector, userSelector,themeSelector } from "../../../features/StoreId";
 import type { Customer } from "../../../type/Customer";
 import type { PayloadNewProject } from "../../../type/Project";
 import type { UserNotPagging } from "../../../type/User";
@@ -118,7 +118,7 @@ function SaveProject({ TYPE_SAVE, onClose, defaultValues }: SaveProjectProps) {
     setCustomer(getCustomers.customers)
     setUsers(getUsers.users)
   }, []);
-
+  const {themeColor} = useSelector(themeSelector)
   return (
     <Tabs>
       <form onSubmit={onSubmit}>
@@ -158,7 +158,7 @@ function SaveProject({ TYPE_SAVE, onClose, defaultValues }: SaveProjectProps) {
             )}
           </TabPanel>
         </TabPanels>
-        <Button colorScheme="blue" type="submit">
+        <Button bgColor={themeColor ? themeColor : 'blue.400'} color='white' type="submit">
           Save
         </Button>
       </form>
