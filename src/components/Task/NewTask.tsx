@@ -4,9 +4,11 @@ import { Input } from "@chakra-ui/input";
 import { Box } from "@chakra-ui/layout";
 import { Select } from "@chakra-ui/select";
 import React, { useState } from "react";
+import {useSelector} from "react-redux"
 import { useAppDispatch } from "../../app/hooks";
 import { newTask } from "../../features/TaskSlice";
 import { Task } from "../../type/Task";
+import { themeSelector } from "../../features/StoreId";
 
 export interface EditTaskProps {
   onClose: () => void;
@@ -24,7 +26,7 @@ export default function EditTask({ onClose }: EditTaskProps) {
     dispatch(newTask(dataNewTask));
     onClose();
   };
-
+  const {themeColor} = useSelector(themeSelector)
   return (
     <Box>
       <form onSubmit={(e) => handleSubmitEdit(e)}>
@@ -53,7 +55,7 @@ export default function EditTask({ onClose }: EditTaskProps) {
               Other Task
             </option>
           </Select>
-          <Button colorScheme="blue" mt={2} type="submit">
+          <Button bgColor={themeColor ? themeColor : 'blue.400'} color='white' mt={2} type="submit">
             Save
           </Button>
           

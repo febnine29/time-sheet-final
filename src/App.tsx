@@ -63,9 +63,9 @@ function App() {
                   <Auth />
                 </Box>} />
           <Route path="/test-page" element={
-          <Box w="100%" h="100vh" className="app">
-            <TestPage />
-          </Box>} />
+                <Box w="100%" h="100vh" className="app">
+                  <TestPage />
+                </Box>} />
           <Route
             path="/home"
             element={

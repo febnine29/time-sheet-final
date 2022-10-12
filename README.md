@@ -6,9 +6,9 @@
 
 1. Current timesheet app:
 
-- Sample app: http://dev.timesheet.nccsoft.vn/
-- Swagger: http://dev.timesheetapi.nccsoft.vn/swagger/index.html
-- Account: `admindev/123qwe`
+- Sample app: http://dev-api-timesheet.nccsoft.vn/
+- Swagger: http://dev-api-timesheet.nccsoft.vn/swagger/index.html
+- Account: `admin/123qwe`
 
 2. Reuse current backend api and rebuild 3 features: Authentication, Task Manager, Project Manager
 

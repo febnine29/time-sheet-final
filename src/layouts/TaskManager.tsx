@@ -11,7 +11,7 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Plus } from "react-feather";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useSelector } from "react-redux";
@@ -63,12 +63,7 @@ export default function TaskManager(props: TaskManagerProps) {
     });
     dispatch(setMess({ mess: "", type: "success" }));
   }
-  if (taskLoading) return <Spinner thickness='4px'
-                                    speed='0.65s'
-                                    emptyColor='gray.200'
-                                    color='red.500'
-                                    size='lg'/>;
-
+  
   return (
     <Box width="100%" maxW="1200px" mr='1rem'>
       <Modal
@@ -97,6 +92,11 @@ export default function TaskManager(props: TaskManagerProps) {
           </Button>
         </Flex>
       </Box>
+      {taskLoading && <Spinner thickness='4px'
+                                    speed='0.65s'
+                                    emptyColor='gray.200'
+                                    color={themeColor ? themeColor : 'blue.400'}
+                                    size='lg'/>}
       <CommonTask handleClickEdit={handleClickEdit} tasks={tasks} />
       <OtherTask handleClickEdit={handleClickEdit} tasks={tasks} />
       

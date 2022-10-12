@@ -10,7 +10,9 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import axios from 'axios';
-import {useSelector} from 'react-redux'
+import {useSelector} from 'react-redux';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { FixedSizeList as List } from "react-window";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   activeProject,
@@ -123,7 +125,7 @@ export default function ProjectManager(props: ProjectManagerProps) {
           duration: 2000,
           isClosable: true,
       });
-      dispatch(getAllProject())
+      dispatch(getAllProject({ status: "", search: inputFilter }))
     })
     .catch( error => {
       toast({
@@ -146,7 +148,7 @@ export default function ProjectManager(props: ProjectManagerProps) {
         duration: 2000,
         isClosable: true,
       });
-      dispatch(getAllProject())
+      dispatch(getAllProject({ status: "", search: inputFilter }))
     })
     .catch( error => {
       toast({
@@ -169,7 +171,7 @@ export default function ProjectManager(props: ProjectManagerProps) {
         duration: 2000,
         isClosable: true,
       });
-      dispatch(getAllProject())
+      dispatch(getAllProject({ status: "", search: inputFilter }))
     })
     .catch( error => {
       toast({
@@ -238,7 +240,7 @@ export default function ProjectManager(props: ProjectManagerProps) {
       {projectLoading && <Spinner thickness='4px'
                                   speed='0.65s'
                                   emptyColor='gray.200'
-                                  color={themeColor}
+                                  color={themeColor ? themeColor : 'blue.400'}
                                   size='lg'/>}
 
       {transformProject(projects)?.map((item, index) => {
@@ -260,19 +262,6 @@ export default function ProjectManager(props: ProjectManagerProps) {
               borderBottomLeftRadius={5}
               borderBottomRightRadius={5}
             >
-              {/* {item.data.map((data, index) => {
-                <SingleProject
-                  key={data.id}
-                  dataProject={data}
-                  setProjectCheck={setProjectCheck}
-                  projectCheck={projectCheck}
-                  isOpenEditProject={isOpenEditProject}
-                  onOpenEditProject={onOpenEditProject}
-                  currentProject={currentProject}
-                  setCurrentProject={setCurrentProject}
-              />
-              })} */}
-              
                 {item.data.map((data, index) => (
                   <Flex key={data.id}  alignItems="center" py={1} pr={2} borderBottom='1px solid #dddbdb'>
                     <Box>
@@ -316,10 +305,6 @@ export default function ProjectManager(props: ProjectManagerProps) {
                             Unactive
                           </MenuItem>
                         }
-                        <MenuItem style={{marginBottom: '10px'}}>
-                          <Feather.Eye size={20} style={{marginRight: '15px'}}/>
-                          View
-                        </MenuItem>
                         <MenuItem  
                           style={{marginBottom: '10px'}}
                           onClick={() => {
@@ -344,17 +329,6 @@ export default function ProjectManager(props: ProjectManagerProps) {
                       
                     </Box>
                   </Flex>
-                  // <SingleProject
-                  //   key={index}
-                  //   dataProject={data}
-                  //   setProjectCheck={setProjectCheck}
-                  //   projectCheck={projectCheck}
-                  //   isOpenEditProject={isOpenEditProject}
-                  //   onOpenEditProject={onOpenEditProject}
-                  //   currentProject={currentProject}
-                  //   setCurrentProject={setCurrentProject}
-                  // />
-                  
                 ))}
             </Box>
           </Box>

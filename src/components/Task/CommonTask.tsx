@@ -9,8 +9,11 @@ import {Box, Button, Code, Divider, Flex, Heading, Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-import {useRef} from 'react';
+import {useRef, useState, useEffect} from 'react';
 import { useAppDispatch } from "../../app/hooks";
+import { ViewportList } from 'react-viewport-list';
+import { FixedSizeList as List } from "react-window";
+import AutoSizer from 'react-virtualized-auto-sizer'
 import {
   archiveTask,
   deArchiveTask,
@@ -25,7 +28,9 @@ export interface CommonTaskProps {
 }
 
 export default function CommonTask({tasks, handleClickEdit}: CommonTaskProps) {
-  
+  const ref = useRef<HTMLDivElement | null>(
+    null,
+  );
   const { 
     isOpen: isOpenDelete, 
     onOpen: onOpenDelete, 
@@ -38,12 +43,17 @@ export default function CommonTask({tasks, handleClickEdit}: CommonTaskProps) {
       isOpen: isOpenUn, 
       onOpen: onOpenUn, 
       onClose: onCloseUn} = useDisclosure();
+
   const cancelRef = useRef<HTMLButtonElement>(null)
   const dispatch = useAppDispatch();
   const dataAlert = useSelector(alertSelector)
-  console.log('dataALert', dataAlert)
   const taskName = dataAlert.task.name
   const taskId = dataAlert.task.id
+
+  const [taskList, setTaskList] = useState<Task[] | undefined>(undefined)
+  useEffect(() => {
+    setTaskList(tasks!)
+  })
   // const id = taskId
   const handleDeleteTask = () => {
     dispatch(deleteTask(taskId))
@@ -57,15 +67,160 @@ export default function CommonTask({tasks, handleClickEdit}: CommonTaskProps) {
     dispatch(deArchiveTask({ id: taskId }))
     onCloseUn()
   }
+  const commonTask = taskList?.filter((task) => task.type === 0)
+  // console.log('commontask',commonTask)
+  const Row = ({ index, key, style }: any) => (
+      <div>
+      <div key={key} style={style} className="post">
+        {/* <h3>{`${tasks![index].name}-${tasks![index].id}`}</h3> */}
+        <>
+            <Flex
+              justifyContent="space-between"
+              alignItems="center"
+              key={key}
+            >
+              <Button
+                colorScheme="blue"
+                size="sm"
+                onClick={() => handleClickEdit(commonTask![index])}
+              >
+                Edit
+              </Button>
+              <Text bg='none' mr='auto' ml='10px'>
+                {commonTask![index].name}
+              </Text>
+              <Box>
+                {commonTask![index].isDeleted ? (
+                  <Button
+                    colorScheme="orange"
+                    size="sm"
+                    onClick={() => {
+                      dispatch(storeId(commonTask![index]))
+                      onOpenUn()
+                    }}
+                  >
+                    Unarchive
+                  </Button>
+                ) : (
+                  <Button
+                    colorScheme="orange"
+                    size="sm"
+                    onClick={() => {
+                      dispatch(storeId(commonTask![index]))
+                      onOpenAr()
+                    }}
+                  >
+                    Archive
+                  </Button>
+                )}
 
+                <Button
+                  colorScheme="red"
+                  size="sm"
+                  ml={2}
+                  isDisabled={!commonTask![index].isDeleted}
+                  onClick={() => {
+                    dispatch(storeId(commonTask![index]))
+                    onOpenDelete()
+                  }}
+                >
+                  Delete
+                </Button>
+              </Box>
+            </Flex>
+            <Divider mt={2} mb={2} />
+          </>
+      </div>
+      </div>
+   )
   return (
     
-    <Box>
+    <Box height='550px'>
       <Heading fontSize={30} my={5}>
-        Common Tasks
+        Common Tasks ({tasks?.filter((task) => task.type === 0).length})
       </Heading>
-      <Box maxHeight='60vh' overflowY="scroll">
-      {tasks
+      <AutoSizer>
+        {({height, width}: any) => (
+          <List
+          height={500}
+          width={width}
+          itemCount={commonTask?.length}
+          itemSize={50}
+        >
+          {Row}
+        </List>
+        )}
+      </AutoSizer>
+      
+      <Box maxHeight='60vh' overflowY="scroll" ref={ref}>
+      {/* <ViewportList
+        viewportRef={ref}
+        items={commonTask}
+      >
+        {(task) => (
+          <>
+          <Flex
+            justifyContent="space-between"
+            alignItems="center"
+            key={task.id}
+          >
+            <Button
+              colorScheme="blue"
+              size="sm"
+              onClick={() => handleClickEdit(task)}
+            >
+              Edit
+            </Button>
+            <Text bg='none' mr='auto' ml='10px'>
+              {task.name}
+            </Text>
+            <Box>
+              {task.isDeleted ? (
+                <Button
+                  colorScheme="orange"
+                  size="sm"
+                  onClick={() => {
+                    dispatch(storeId(task))
+                    onOpenUn()
+                  }}
+                >
+                  Unarchive
+                </Button>
+              ) : (
+                <Button
+                  colorScheme="orange"
+                  size="sm"
+                  onClick={() => {
+                    dispatch(storeId(task))
+                    onOpenAr()
+                  }}
+                >
+                  Archive
+                </Button>
+              )}
+
+              <Button
+                colorScheme="red"
+                size="sm"
+                ml={2}
+                isDisabled={!task.isDeleted}
+                onClick={() => {
+                  dispatch(storeId(task))
+                  onOpenDelete()
+                }}
+              >
+                Delete
+              </Button>
+            </Box>
+          </Flex>
+          <Divider mt={2} mb={2} />
+        </>
+        )}
+      </ViewportList> */}
+    
+
+
+      {/* {taskList
         ?.filter((task) => task.type === 0)
         .map((task) => (
           <>
@@ -125,7 +280,7 @@ export default function CommonTask({tasks, handleClickEdit}: CommonTaskProps) {
             </Flex>
             <Divider mt={2} mb={2} />
           </>
-        ))}
+        ))} */}
         </Box>
         {/* --------------ALERT DIALOG---------------- */}
         <AlertDialog
