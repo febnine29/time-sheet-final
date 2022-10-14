@@ -6,7 +6,7 @@
 
 1. Current timesheet app:
 
-- Sample app: http://dev-api-timesheet.nccsoft.vn/
+- Sample app: http://dev-timesheet.nccsoft.vn/app/main/mytimesheets
 - Swagger: http://dev-api-timesheet.nccsoft.vn/swagger/index.html
 - Account: `admin/123qwe`
 

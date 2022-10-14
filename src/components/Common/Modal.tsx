@@ -24,7 +24,7 @@ export default function Modal({
   onClose,
 }: ModalProps) {
   return (
-    <ModalChakra size="xl" onClose={onClose} isOpen={isOpen}>
+    <ModalChakra size="xl" closeOnOverlayClick={false} onClose={onClose} isOpen={isOpen} motionPreset='none'>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>

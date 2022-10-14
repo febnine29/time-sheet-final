@@ -43,13 +43,10 @@ export const mergeObjectUserForm =
   (userFrom1: UserFormNewProject[]) =>
   (userForm2: UserFormNewProject): UserFormNewProject[] | null => {
     if (!userFrom1 || !userForm2) return null;
-    console.log('userFrom1', userFrom1);
     return userFrom1.map((itemArr1) => {
       if (itemArr1.userId === userForm2.userId) {
-        console.log('userForm2', userForm2)
         return userForm2;
       } else {
-        console.log('itemArr1', itemArr1)
         return itemArr1;
       }
     });

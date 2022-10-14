@@ -59,12 +59,6 @@ function Team({
   userDefaultValues,
 }: TeamProps) {
   const dispatch = useDispatch()
-  // const getUsers = useSelector(userSelector)
-  // const [users, setUsers] = useState<UserNotPagging[] | null>(null);
-  // useEffect(() => {
-  //   setUsers(getUsers.users)
-  // })
-  // const [users, setUsers] = useState<UserNotPagging[] | null>(null);
   const [userCheck, setUserCheck] = useState<UserNotPagging[] | null>(null);
   const [userForm, setUserForm] = useState<UserFormNewProject[] | null>(null);
   const [flagUserCheck, setFlagUserCheck] = useState({});
@@ -86,13 +80,10 @@ function Team({
     }
     //handle check userForm
     if (!userForm) {
-      console.log("set");
       setUserForm([{ userId: item.id, type: 1 }]);
     } else {
       setUserForm([...userForm!, { userId: item.id, type: 0 }]);
     }
-    console.log('usercheck', userCheck)
-    console.log('users', users)
   };
   const handleClickRemove = (item: UserNotPagging) => {
     //handle remove userCheck
@@ -111,7 +102,6 @@ function Team({
 
   useEffect(() => {
     setValue("users", userForm as UserFormNewProject[]);
-    console.log('userForm', userForm)
   }, [userForm]);
 
   useEffect(() => {
@@ -120,7 +110,6 @@ function Team({
       setUserCheck(getObjectById(userDefaultValues!)(users!)!);
       setFlagUserCheck({});
     }
-    console.log('userDefaultValues', userDefaultValues)
   }, [userDefaultValues]);
 
   const handleChangeOffice = (
@@ -136,9 +125,6 @@ function Team({
   const handleRenderMembers = () => {
     setRender(true)
   }
-  // useEffect(() => {
-  //   dispatch(getUser())
-  // },[])
   return (
     
     <Box maxH="500px" overflowY="scroll">

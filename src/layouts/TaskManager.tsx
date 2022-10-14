@@ -92,11 +92,11 @@ export default function TaskManager(props: TaskManagerProps) {
           </Button>
         </Flex>
       </Box>
-      {taskLoading && <Spinner thickness='4px'
+      {/* {taskLoading && <Spinner thickness='4px'
                                     speed='0.65s'
                                     emptyColor='gray.200'
                                     color={themeColor ? themeColor : 'blue.400'}
-                                    size='lg'/>}
+                                    size='lg'/>} */}
       <CommonTask handleClickEdit={handleClickEdit} tasks={tasks} />
       <OtherTask handleClickEdit={handleClickEdit} tasks={tasks} />
       

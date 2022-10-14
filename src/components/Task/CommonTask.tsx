@@ -77,7 +77,6 @@ export default function CommonTask({tasks, handleClickEdit}: CommonTaskProps) {
             <Flex
               justifyContent="space-between"
               alignItems="center"
-              key={key}
             >
               <Button
                 colorScheme="blue"
@@ -153,134 +152,7 @@ export default function CommonTask({tasks, handleClickEdit}: CommonTaskProps) {
       </AutoSizer>
       
       <Box maxHeight='60vh' overflowY="scroll" ref={ref}>
-      {/* <ViewportList
-        viewportRef={ref}
-        items={commonTask}
-      >
-        {(task) => (
-          <>
-          <Flex
-            justifyContent="space-between"
-            alignItems="center"
-            key={task.id}
-          >
-            <Button
-              colorScheme="blue"
-              size="sm"
-              onClick={() => handleClickEdit(task)}
-            >
-              Edit
-            </Button>
-            <Text bg='none' mr='auto' ml='10px'>
-              {task.name}
-            </Text>
-            <Box>
-              {task.isDeleted ? (
-                <Button
-                  colorScheme="orange"
-                  size="sm"
-                  onClick={() => {
-                    dispatch(storeId(task))
-                    onOpenUn()
-                  }}
-                >
-                  Unarchive
-                </Button>
-              ) : (
-                <Button
-                  colorScheme="orange"
-                  size="sm"
-                  onClick={() => {
-                    dispatch(storeId(task))
-                    onOpenAr()
-                  }}
-                >
-                  Archive
-                </Button>
-              )}
-
-              <Button
-                colorScheme="red"
-                size="sm"
-                ml={2}
-                isDisabled={!task.isDeleted}
-                onClick={() => {
-                  dispatch(storeId(task))
-                  onOpenDelete()
-                }}
-              >
-                Delete
-              </Button>
-            </Box>
-          </Flex>
-          <Divider mt={2} mb={2} />
-        </>
-        )}
-      </ViewportList> */}
-    
-
-
-      {/* {taskList
-        ?.filter((task) => task.type === 0)
-        .map((task) => (
-          <>
-            <Flex
-              justifyContent="space-between"
-              alignItems="center"
-              key={task.id}
-            >
-              <Button
-                colorScheme="blue"
-                size="sm"
-                onClick={() => handleClickEdit(task)}
-              >
-                Edit
-              </Button>
-              <Text bg='none' mr='auto' ml='10px'>
-                {task.name}
-              </Text>
-              <Box>
-                {task.isDeleted ? (
-                  <Button
-                    colorScheme="orange"
-                    size="sm"
-                    onClick={() => {
-                      dispatch(storeId(task))
-                      onOpenUn()
-                    }}
-                  >
-                    Unarchive
-                  </Button>
-                ) : (
-                  <Button
-                    colorScheme="orange"
-                    size="sm"
-                    onClick={() => {
-                      dispatch(storeId(task))
-                      onOpenAr()
-                    }}
-                  >
-                    Archive
-                  </Button>
-                )}
-
-                <Button
-                  colorScheme="red"
-                  size="sm"
-                  ml={2}
-                  isDisabled={!task.isDeleted}
-                  onClick={() => {
-                    dispatch(storeId(task))
-                    onOpenDelete()
-                  }}
-                >
-                  Delete
-                </Button>
-              </Box>
-            </Flex>
-            <Divider mt={2} mb={2} />
-          </>
-        ))} */}
+      
         </Box>
         {/* --------------ALERT DIALOG---------------- */}
         <AlertDialog

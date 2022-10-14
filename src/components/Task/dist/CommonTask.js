@@ -44,7 +44,7 @@ function CommonTask(_a) {
         return (react_2["default"].createElement("div", null,
             react_2["default"].createElement("div", { key: key, style: style, className: "post" },
                 react_2["default"].createElement(react_2["default"].Fragment, null,
-                    react_2["default"].createElement(react_1.Flex, { justifyContent: "space-between", alignItems: "center", key: key },
+                    react_2["default"].createElement(react_1.Flex, { justifyContent: "space-between", alignItems: "center" },
                         react_2["default"].createElement(react_1.Button, { colorScheme: "blue", size: "sm", onClick: function () { return handleClickEdit(commonTask[index]); } }, "Edit"),
                         react_2["default"].createElement(react_1.Text, { bg: 'none', mr: 'auto', ml: '10px' }, commonTask[index].name),
                         react_2["default"].createElement(react_1.Box, null,

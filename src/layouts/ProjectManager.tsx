@@ -6,7 +6,13 @@ import ReactDOM from 'react-dom';
 import * as Feather from "react-feather"
 import { Spinner } from "@chakra-ui/spinner";
 import { 
-  Box, Button, AlertDialog, AlertDialogOverlay, AlertDialogContent,AlertDialogBody,AlertDialogHeader, AlertDialogFooter, useToast,useDisclosure,Select,Input,Flex, Text
+  Box, Button, AlertDialog, 
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,AlertDialogOverlay, AlertDialogContent,AlertDialogBody,AlertDialogHeader, AlertDialogFooter, useToast,useDisclosure,Select,Input,Flex, Text
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import axios from 'axios';
@@ -148,7 +154,7 @@ export default function ProjectManager(props: ProjectManagerProps) {
         duration: 2000,
         isClosable: true,
       });
-      dispatch(getAllProject({ status: "", search: inputFilter }))
+      dispatch(getAllProject({ status: currentStatusFilter, search: inputFilter }))
     })
     .catch( error => {
       toast({
@@ -171,7 +177,7 @@ export default function ProjectManager(props: ProjectManagerProps) {
         duration: 2000,
         isClosable: true,
       });
-      dispatch(getAllProject({ status: "", search: inputFilter }))
+      dispatch(getAllProject({ status: currentStatusFilter, search: inputFilter }))
     })
     .catch( error => {
       toast({
@@ -194,12 +200,28 @@ export default function ProjectManager(props: ProjectManagerProps) {
     borderRadius: '5px',
     border: '1px solid lightgray',
   }
-  const [color, setColor] = useState('blue.400')
   const {themeColor} = useSelector(themeSelector)
   
 
   return (
     <Box p={5} width="100%" maxW="1200px" m="0 auto">
+      {/* <Button onClick={onOpenNewProject}>Create Project</Button>
+      <Modal isOpen={isOpenNewProject} onClose={onCloseNewProject} motionPreset='none'>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <SaveProject TYPE_SAVE="ADD_PROJECT" onClose={onCloseNewProject} />
+          </ModalBody>
+          <SaveProject TYPE_SAVE="ADD_PROJECT" onClose={onCloseNewProject} />
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onCloseNewProject}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal> */}
       <Modal
         isOpen={isOpenNewProject}
         onOpen={onOpenNewProject}
@@ -208,7 +230,7 @@ export default function ProjectManager(props: ProjectManagerProps) {
           <SaveProject TYPE_SAVE="ADD_PROJECT" onClose={onCloseNewProject} />
         }
         title="Create Project"
-      />
+      /> 
       <Modal
         isOpen={isOpenEditProject}
         onOpen={onOpenEditProject}
@@ -237,11 +259,11 @@ export default function ProjectManager(props: ProjectManagerProps) {
         handleOnChangeInputFilter={handleOnChangeInputFilter}
         inputFilter={inputFilter}
       />
-      {projectLoading && <Spinner thickness='4px'
+      {/* {projectLoading && <Spinner thickness='4px'
                                   speed='0.65s'
                                   emptyColor='gray.200'
                                   color={themeColor ? themeColor : 'blue.400'}
-                                  size='lg'/>}
+                                  size='lg'/>} */}
 
       {transformProject(projects)?.map((item, index) => {
         return (

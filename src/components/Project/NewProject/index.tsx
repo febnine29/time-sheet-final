@@ -66,7 +66,7 @@ function SaveProject({ TYPE_SAVE, onClose, defaultValues }: SaveProjectProps) {
       defaultValues: defaultValues || {
       projectTargetUsers: [],
       isAllUserBelongTo: false,
-      customerId: customer?.[0].id,
+      // customerId: customer?.[0].id,            
     },
     resolver: yupResolver(schema),
   });
@@ -74,7 +74,6 @@ function SaveProject({ TYPE_SAVE, onClose, defaultValues }: SaveProjectProps) {
   // handle funtion onSubmit by type Save
   const onSubmit = handleSubmit((data) => {
     dispatch(saveProject(data));
-    console.log('data project',data)
     onClose();
   });
 
@@ -114,6 +113,7 @@ function SaveProject({ TYPE_SAVE, onClose, defaultValues }: SaveProjectProps) {
 
   const getCustomers = useSelector(customerSelector)
   const getUsers = useSelector(userSelector)
+  console.log('user---', getUsers)
   useEffect(() => {
     setCustomer(getCustomers.customers)
     setUsers(getUsers.users)

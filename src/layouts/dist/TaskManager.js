@@ -45,7 +45,6 @@ function TaskManager(props) {
         react_2["default"].createElement(react_1.Box, null,
             react_2["default"].createElement(react_1.Flex, { justifyContent: "space-around", alignItems: "center", mt: 5 },
                 react_2["default"].createElement(react_1.Button, { leftIcon: react_2["default"].createElement(react_feather_1.Plus, null), bgColor: themeColor ? themeColor : 'blue.400', color: 'white', onClick: onOpenAdd }, "New Task"))),
-        taskLoading && react_2["default"].createElement(react_1.Spinner, { thickness: '4px', speed: '0.65s', emptyColor: 'gray.200', color: themeColor ? themeColor : 'blue.400', size: 'lg' }),
         react_2["default"].createElement(CommonTask_1["default"], { handleClickEdit: handleClickEdit, tasks: tasks }),
         react_2["default"].createElement(OtherTask_1["default"], { handleClickEdit: handleClickEdit, tasks: tasks })));
 }

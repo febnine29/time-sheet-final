@@ -26,11 +26,6 @@ import {url} from "../../../api/index"
 const DatePickerChakra = chakra(DatePicker);
 export interface GeneralProps {
   customer: Customer[] | null;
-  // handleFormData: (e: any) => void;
-  // handleDateStartData: (date: Date) => void;
-  // handleDateEndData: (date: Date) => void;
-  // handleIsAllUserBelongToCheckBox: (isCheck: boolean) => void;
-  // handleCustomerId: (e: any) => void;
   register: UseFormRegister<FieldValues>;
   setValue: UseFormSetValue<Partial<PayloadNewProject>>;
   control: Control<PayloadNewProject, object>;
@@ -41,11 +36,7 @@ function General({
   register,
   setValue,
   control,
-}: // handleFormData,
-// handleDateStartData,
-// handleDateEndData,
-// handleIsAllUserBelongToCheckBox,
-// handleCustomerId,
+}: 
 GeneralProps) {
  
 
@@ -64,6 +55,7 @@ GeneralProps) {
             <Select 
               onChange={(e) => onChange(+e.target.value)} 
               onBlur={onBlur}
+              placeholder='Select customer'
             >
 
               {customer?.map((item: any) => (

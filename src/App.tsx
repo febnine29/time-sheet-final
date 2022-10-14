@@ -23,6 +23,20 @@ import {Customer} from './type/Customer';
 import {UserNotPagging} from './type/User';
 import { storeUsers, storeCustomers } from "./features/StoreId";
 import {url} from './api/index'
+
+// -------------Testing Learning---------------
+export function divide(a: number, b: number): number {
+  
+  // Sure, we cannot divide by 0,
+  // so in this case we will throw an error.
+  if (b === 0) {
+    throw new Error("You can't divide by zero.");
+  }
+  
+  // If everything is okay, we will return
+  // a round division result.
+  return Math.round(a / b);
+}
 function App() {
   const dispatch = useAppDispatch();
 
@@ -54,6 +68,8 @@ function App() {
     getCustomer();
     dispatch(getAllTask());
   })
+
+  
   return (
     <Box className="App" w="100%" h="100vh">
       <Box display="flex" w="100%" h="100vh">

@@ -144,7 +144,7 @@ export const saveProject = createAsyncThunk(
     try {
       const response = await axios.post(addProjectApi, data);
       console.log(response);
-      dispatch(getAllProject());
+      dispatch(getAllProject({status: '', search: ''}));
       dispatch(
         setMess({
           type: "success",

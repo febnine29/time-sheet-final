@@ -5,7 +5,6 @@ require("@szhsin/react-menu/dist/index.css");
 require("@szhsin/react-menu/dist/transitions/slide.css");
 var dayjs_1 = require("dayjs");
 var Feather = require("react-feather");
-var spinner_1 = require("@chakra-ui/spinner");
 var react_1 = require("@chakra-ui/react");
 var react_2 = require("react");
 var axios_1 = require("axios");
@@ -106,7 +105,7 @@ function ProjectManager(props) {
                 duration: 2000,
                 isClosable: true
             });
-            dispatch(ProjectSlice_1.getAllProject({ status: "", search: inputFilter }));
+            dispatch(ProjectSlice_1.getAllProject({ status: currentStatusFilter, search: inputFilter }));
         })["catch"](function (error) {
             toast({
                 title: "Active Project " + getId.pId.name + " Failed",
@@ -128,7 +127,7 @@ function ProjectManager(props) {
                 duration: 2000,
                 isClosable: true
             });
-            dispatch(ProjectSlice_1.getAllProject({ status: "", search: inputFilter }));
+            dispatch(ProjectSlice_1.getAllProject({ status: currentStatusFilter, search: inputFilter }));
         })["catch"](function (error) {
             toast({
                 title: "Unactive Project " + getId.pId.name + " Failed",
@@ -150,15 +149,13 @@ function ProjectManager(props) {
         borderRadius: '5px',
         border: '1px solid lightgray'
     };
-    var _m = react_2.useState('blue.400'), color = _m[0], setColor = _m[1];
     var themeColor = react_redux_1.useSelector(StoreId_2.themeSelector).themeColor;
     return (react_2["default"].createElement(react_1.Box, { p: 5, width: "100%", maxW: "1200px", m: "0 auto" },
         react_2["default"].createElement(Modal_1["default"], { isOpen: isOpenNewProject, onOpen: onOpenNewProject, onClose: onCloseNewProject, component: react_2["default"].createElement(NewProject_1["default"], { TYPE_SAVE: "ADD_PROJECT", onClose: onCloseNewProject }), title: "Create Project" }),
         react_2["default"].createElement(Modal_1["default"], { isOpen: isOpenEditProject, onOpen: onOpenEditProject, onClose: onCloseEditProject, component: react_2["default"].createElement(EditProject_1["default"], { onClose: onCloseEditProject, currentProject: currentProject }), title: "Edit Project" }),
         react_2["default"].createElement(react_1.Box, { mb: 5, display: 'flex', justifyContent: 'center' },
             react_2["default"].createElement(react_1.Button, { leftIcon: react_2["default"].createElement(react_feather_1.Plus, null), bgColor: themeColor ? themeColor : 'blue.400', color: 'white', onClick: onOpenNewProject }, "New Project")),
-        react_2["default"].createElement(FilterProject_1["default"], { handleOnchangeOptionFilter: handleOnchangeOptionFilter, currentStatusFilter: currentStatusFilter, handleOnChangeInputFilter: handleOnChangeInputFilter, inputFilter: inputFilter }),
-        projectLoading && react_2["default"].createElement(spinner_1.Spinner, { thickness: '4px', speed: '0.65s', emptyColor: 'gray.200', color: themeColor ? themeColor : 'blue.400', size: 'lg' }), (_a = transformProject_1.transformProject(projects)) === null || _a === void 0 ? void 0 :
+        react_2["default"].createElement(FilterProject_1["default"], { handleOnchangeOptionFilter: handleOnchangeOptionFilter, currentStatusFilter: currentStatusFilter, handleOnChangeInputFilter: handleOnChangeInputFilter, inputFilter: inputFilter }), (_a = transformProject_1.transformProject(projects)) === null || _a === void 0 ? void 0 :
         _a.map(function (item, index) {
             return (react_2["default"].createElement(react_1.Box, { key: index, mt: 2 },
                 react_2["default"].createElement(react_1.Box, { fontSize: "20px", fontWeight: "bold", color: "white", backgroundColor: themeColor ? themeColor : 'blue.400', p: 2, borderTopLeftRadius: 5, borderTopRightRadius: 5 }, item.customerName.toUpperCase()),

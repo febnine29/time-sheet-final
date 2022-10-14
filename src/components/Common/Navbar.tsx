@@ -6,7 +6,10 @@ import {
   Flex,
   Icon,
   Text,
+  Spinner,
+  useDisclosure
 } from "@chakra-ui/react";
+import { Fade, ScaleFade, Slide, SlideFade } from '@chakra-ui/react'
 import React from "react";
 import { Archive, Code, Home, LogOut } from "react-feather";
 import { Link } from "react-router-dom";
@@ -17,13 +20,21 @@ import {
   logout,
   removeTokenLocalStorage,
 } from "../../features/AuthSlice";
+import { projectSelector } from "../../features/ProjectSlice";
+import {taskSelector} from "../../features/TaskSlice";
+import { themeSelector } from "../../features/StoreId";
 import nccLogo from '../../images/nccsoft_vietnam_logo.png'
 import { Navigate } from "react-router-dom";
+import {useSelector} from "react-redux"
 export interface NavbarProps {}
 
 export default function Navbar(props: NavbarProps) {
   const dispatch = useAppDispatch();
+  const {projectLoading} = useSelector(projectSelector)
+  const {taskLoading} = useSelector(taskSelector)
+  const {themeColor} = useSelector(themeSelector)
   const { userInfo } = useAppSelector(authSelector);
+  const {isOpen, onToggle} = useDisclosure();
   const handleLogout = () => {
       dispatch(logout());
       setToken(null);
@@ -69,10 +80,19 @@ export default function Navbar(props: NavbarProps) {
           <Flex
             padding={3}
             alignItems="center"
-            _hover={{ bgColor: "gray.200" }}
+            _hover={{ bgColor: "gray.200"}}
             cursor="pointer"
           >
             Tasks Manager
+            <Box ml="auto" height='24px'>
+              {taskLoading && 
+                  <Spinner thickness='4px'
+                    speed='0.5s'
+                    color={themeColor ? themeColor : 'blue.400'}
+                    size='md'
+                  />
+              }
+            </Box>
           </Flex>
           <Divider />
         </Link>
@@ -81,15 +101,25 @@ export default function Navbar(props: NavbarProps) {
           <Flex
             padding={3}
             alignItems="center"
-            _hover={{ bgColor: "gray.200" }}
+            _hover={{ bgColor: "gray.100" }}
             cursor="pointer"
           >
             Projects Manager
+            <Box ml="auto" height='24px'>
+              {/* <ScaleFade initialScale={0.9} in={isOpen}> */}
+                {projectLoading && 
+                    <Spinner thickness='4px'
+                      speed='0.5s'
+                      color={themeColor ? themeColor : 'blue.400'}
+                      size='md'
+                    />
+                }
+              {/* </ScaleFade> */}
+            </Box>
           </Flex>
           <Divider />
-        </Link>
-
-        <Divider />
+        </Link>                                     
+        <Divider />                               
       </Flex>
     </Box>
   );
